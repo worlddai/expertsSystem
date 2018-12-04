@@ -1,0 +1,77 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>iview example</title>
+    <script type="text/javascript" src="lib/vue.js"></script>
+    <link rel="stylesheet" type="text/css" href="lib/iview/iview.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <script type="text/javascript" src="lib/iview/iview.min.js"></script>
+    <script type="text/javascript" src="lib/jquery.min.js"></script>
+    <script type="text/javascript" src="util/image_uploader.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
+    <script type="text/javascript" src="components/addUpdateExperts.js"></script>
+    <script type="text/javascript" src="components/experts.js"></script>
+
+
+</head>
+
+<body>
+    <div id="app" style="height:100%;">
+
+        <Layout style="height: 100%">
+            <i-header class="main-header">
+                <div class="logo"></div>
+                <div class="main-title">专家管理系统</div>
+                <i-input class="home-search" @on-keyup="searchHandel" size="small" icon="ios-search" v-model="search_value"
+                    placeholder="请输入关键字"></i-input>
+            </i-header>
+            <i-content class="main-container">
+
+                <div class="tool-bar">
+                    <i-select class="experts-select-type" v-model="experts_type_value" size="small" style="width:200px">
+                        <i-option v-for="item in experts_type" :value="item.value" :key="item.value">{{ item.label }}</i-option>
+                    </i-select>
+                    <i-button @click="showAddUpdateExperts(null)" class="main-button add-experts-btn" size="small" type="primary"
+                        icon="ios-add">添加专家</i-button>
+                </div>
+                <div class="experts-container">
+                    <div class="experts-row">
+                        <experts @on-delete="showDeleteExperts" @on-edit="showAddUpdateExperts" ref="dyj123" v-for="item in data_list_prev"
+                            :experts-data="item"></experts>
+                    </div>
+                    <div ref="bcd" class="experts-row">
+                        <experts @on-delete="showDeleteExperts" @onEdit="showAddUpdateExperts" v-for="item in data_list_app"
+                            :experts-data="item"></experts>
+                    </div>
+                </div>
+               
+                <Modal v-model="delete_experts.model_show" :mask-closable="false" title="删除专家" :loading="true" @on-ok="deleteExperts">
+                    <p>确认删除专家 {{delete_experts.willbeDelete ? delete_experts.willbeDelete.name : 'null'}} ?</p>
+                    <p>删除后将不可恢复。</p>
+                </Modal>
+                
+                
+                
+        
+                <!-- <i-button ref = "ada" size="small" type="error" ></i-button> -->
+                <add-update-experts ref="add_update_experts" />
+            </i-content>
+        </Layout>
+        <Page class="page-number" @on-change = "onPageChange" :total="100" />
+    </div>
+
+
+
+
+
+    <!-- <i-button @click="show">Click me!</i-button> -->
+
+
+  
+    <script type="text/javascript" src="js/app.js"></script>
+
+</body>
+
+</html>

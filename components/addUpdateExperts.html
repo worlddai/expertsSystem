@@ -1,0 +1,85 @@
+﻿
+<Modal ref="add_update_modal" class="add-update-props-parent" :loading="true" @on-ok="handelAddUpdate" width="600"
+    v-model="addUpdateExpertsShow" title="添加专家" :mask-closable="false">
+
+    <i-form ref="add_update_form" :model="formItem" :rules="ruleValidate" :label-width="80">
+        <form-item class="add-update-form-item" label="姓名" prop="name">
+            <i-input size="small" v-model="formItem.name" placeholder="请输入姓名"></i-input>
+        </form-item>
+
+        <form-item class="add-update-form-item" label="职务" prop="duty">
+            <i-input size="small" v-model="formItem.duty" placeholder="输入专家职务"></i-input>
+        </form-item>
+        <form-item class="add-update-form-item" label="单位" prop="company">
+            <Cascader size="small" v-model="formItem.company.prepend" :data="persistent.company_group_json" trigger="hover"></Cascader>
+            <i-input size="small" v-model="formItem.company.detail" placeholder="具体单位"></i-input>
+        </form-item>
+        <form-item class="add-update-form-item" label="联系方式" prop="contact">
+            <i-input style="margin-top: 6px" v-for="(item,index) in formItem.contact" size="small" v-model="item.value"
+                placeholder="请输入电话">
+
+                <i-select v-model="item.type" slot="prepend" style="width: 70px">
+                    <i-option value="office">办公</i-option>
+                    <i-option value="home">家庭</i-option>
+                    <i-option value="mobile">手机</i-option>
+                    <i-option value="otners">其他</i-option>
+                </i-select>
+                <!-- <> -->
+                <i-button size="small" type="error" class="add-contact-btn" slot="append" @click="handelRemoveContcat(index)"
+                    icon="ios-remove"></i-button>
+                <i-button size="small" class="add-contact-btn" slot="append" @click="handleAddContact" icon="ios-add"></i-button>
+
+
+            </i-input>
+        </form-item>
+        <form-item class="add-update-form-item long" label="专业领域">
+            <Tag v-for="item in formItem.major" :key="item" :name="item" closable @on-close="handleCloseTag">{{item}}</Tag>
+            <Dropdown trigger="custom" :visible="tags_add.tag_list_visible">
+                <i-button icon="ios-add" type="dashed" size="small" @click="handleAddTag">添加专业领域</i-button>
+                <dropdown-menu class="add-major-tags-parent" slot="list">
+                    <i-input class="add-tags-search" @on-keyup="searchHandel" size="small" icon="ios-search" v-model="tags_add.search.value"
+                        placeholder="搜索标签"></i-input>
+
+                    <!-- <Divider orientation="left">常用标签</Divider> -->
+                    <div class="search-show-tags" v-if="!!tags_add.search.value">
+                        <div v-if="!search_tags.length" class="add-tags-none-tip">未找到相关未添加标签</div>
+                        <Tag @on-change="addOneTag(item)" checkable check class="tags" v-for="item in search_tags" :key="item"
+                            :name="item">{{item}}</Tag>
+                    </div>
+                    <Tabs v-if="!tags_add.search.value" value="name1">
+                        <tab-pane label="常用标签" name="name1">
+                            <div v-if="!frequently_used_tags.length" class="add-tags-none-tip">都加完了</div>
+                            <Tag @on-change="addOneTag(item)" checkable check class="tags" v-for="item in frequently_used_tags"
+                                :key="item" :name="item">{{item}}</Tag>
+                        </tab-pane>
+                        <tab-pane label="所有标签" name="name2">
+                            <div class="tags-tree-wapper">
+                                <Tree :data="tags_add.tag_tree_data" @on-select-change="expandNode"></Tree>
+                            </div>
+                        </tab-pane>
+                    </Tabs>
+
+                    <!-- <Divider orientation="left">标签树</Divider> -->
+
+                    <div style="text-align: right;margin:10px;">
+                        <i-button type="primary" @click="handleCloseTagList">关闭</i-button>
+                    </div>
+                </dropdown-menu>
+            </Dropdown>
+        </form-item>
+
+    </i-form>
+
+    <div class="photo-upload-wapper">
+        <Card class="photo-wapper">
+            <img ref="photo_img" id="logoPic" style="" />
+        </Card>
+        <Upload :before-upload="handleUpload" action="//jsonplaceholder.typicode.com/posts/">
+            <i-button class="main-button select-photo-btn" size="small" type="primary" icon="ios-add">选择头像</i-button>
+        </Upload>
+    </div>
+
+
+
+    <!-- <div class="upload-parent" style="width:100px;height: 200px;background-color: red"></div> -->
+</Modal>

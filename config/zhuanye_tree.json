@@ -1,0 +1,30 @@
+﻿[
+    {
+        "title": "北京",
+        "children": [
+            {
+                "frequently": true,
+                "title": "故宫112"
+            },
+            {
+                "title": "天坛"
+            },
+            {
+                "title": "北京分类1",
+                "children": [
+                    {
+                        "title": "北京分类1-故宫",
+                        "frequently": true
+                    },
+                    {
+                        "title": "北京分类1-天坛345"
+                    },
+                    {
+                        "title": "北京分类1-王府井678",
+                        "frequently": true
+                    }
+                ]
+            }
+        ]
+    }
+]

@@ -1,0 +1,18 @@
+﻿<div class="experts-unit">
+    <div v-on:mouseenter = "delete_show = true" v-on:mouseleave ="delete_show = false" class="experts-photo-wapper">
+        <img ref="img_photo" class="experts-photo"></img>
+        <div class="name">{{expertsData.name}}</div>
+        <div v-if = "delete_show" @click = "$emit('on-delete',expertsData)" class="rectangle"></div>
+        <Icon v-if = "delete_show" @click = "$emit('on-delete',expertsData)"  class="rectangle-img" type="ios-trash-outline"></Icon>
+    </div>
+    <!-- <Icon type="ios-trash-outline" /> -->
+    <div class="experts-photo-toolbar">
+        <div class="magor-title">专业领域</div>
+        <div @click="$emit('on-edit',expertsData.data_id)" class="edit-title">编辑</div>
+        <div class="edit-icon"></div>
+    </div>
+    <div class="experts-show">
+        <Tag v-for="item in expertsData.major" :key="item.data_id">{{item}}</Tag>
+    </div>
+    <div class="ellipse" v-if="Math.random()<0.5">...</div>
+</div>

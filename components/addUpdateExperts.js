@@ -155,26 +155,17 @@
                         }
                     }
                 },
-                uploadImg(id) {
-                    // return;
-                    debugger;
-
+                uploadImg(id, isUpdate) {
 
                     const json = {
                         photo: this.filesrc,
                         data_id: id
                     }
-                    $.ajax({
-                        type: 'post',
-                        url: "http://192.168.43.123:9200/expert/picture",
-                        data: JSON.stringify(json),
-                        processData: false,
-                        contentType: false,
-                        success: function (data) {
-                        },
-                        error: function () {
-                        }
-                    })
+                    if (!isUpdate)
+                        return AJAX.addPhoto(json);
+                    else {
+                        return AJAX.updatePhoto(id, json);
+                    }
                 },
                 makeTreeData() {
                     const copyedData = $.extend(true, [], this.persistent.major_group_json);
@@ -237,20 +228,17 @@
 
                 },
                 clearForm() {
-
                     this.formItem.name = "";
                     this.formItem.duty = "";
                     this.formItem.company.prepend = [];
                     this.formItem.company.detail = "";
-                    this.formItem.contact = [{
-                        "type": "office",
-                        "value": ""
-                    }]
+                    this.formItem.contact[0].value = ""
                     this.$refs.photo_img.src = "";
                     this.$refs.add_update_form.resetFields();
 
                 },
                 resoreTagsAddState() {
+                    this.tags_add.tag_list_visible = false;
                     this.tags_add.tag_tree_data = this.makeTreeData();
                     this.formItem.major = [];
                     this.tags_add.temp_tag_tree_removed.splice(0, this.tags_add.temp_tag_tree_removed.length - 1);
@@ -258,36 +246,34 @@
                 resoreState() {
                     this.resoreTagsAddState();
                     this.file = null;
+                    this.filesrc = null;
                 },
 
                 handelAddUpdate() {
                     const self = this;
                     this.$refs.add_update_form.validate((valid) => {
                         if (valid) {
-                            console.log(self.formItem);
+                            if (!self.filesrc) {
+                                self.$Message.error("请选择照片");
+                                self.$refs.add_update_modal.buttonLoading = false;
+                                return;
+                            }
                             if (!this.modeIsUpdate) {
-                                $.ajax({
-                                    "type": "post",
-                                    "url": "http://192.168.43.123:9200/expert/info",
-                                    "data": JSON.stringify(self.formItem),
-                                    "success": (data) => {
-                                        self.addUpdateExpertsShow = false;
-                                        debugger;
-                                        self.uploadImg(data._id)
-
-                                        self.$Message.info(self.modeIsUpdate ? '更新专家成功！' : "添加专家成功");
-                                    }
+                                AJAX.addExperts(self.formItem).then((data) => {
+                                    self.addUpdateExpertsShow = false;
+                                    self.uploadImg(data._id).then(() => {
+                                        self.$emit('reflash', true)
+                                        self.$Message.info("添加专家成功");
+                                    })
                                 })
                             }
                             else {
-                                $.ajax({
-                                    "type": "post",
-                                    "url": `http://192.168.43.123:9200/expert/info/${self.needToUpdateExpertsId}`,
-                                    "data": JSON.stringify(self.formItem),
-                                    "success": (data) => {
-                                        self.addUpdateExpertsShow = false;
-                                        self.$Message.info(self.modeIsUpdate ? '更新专家成功！' : "添加专家成功");
-                                    }
+                                AJAX.updateExperts(self.needToUpdateExpertsId, self.formItem).then(data => {
+                                    self.addUpdateExpertsShow = false;
+                                    self.uploadImg(data._id, true).then(() => {
+                                        self.$emit('reflash', true)
+                                        self.$Message.info('更新专家成功！');
+                                    })
                                 })
                             }
 
@@ -296,54 +282,26 @@
                             self.$Message.error('表单验证失败，请重试');
                         }
                     })
-                    // self.$refs.add_update_modal.buttonLoading = false;
                     return false;
 
                 },
                 show: function (experts_id) {
                     this.resoreState();
-                    debugger;
                     this.modeIsUpdate = !!experts_id;
                     this.clearForm();
-                    this.needToUpdateExpertsId =experts_id;
+                    this.needToUpdateExpertsId = experts_id;
                     this.title = this.modeIsUpdate ? "更新专家" : "添加专家";
+                    const self = this;
                     if (experts_id) {
-
-                        var queryData = {
-                            "query": {
-                                "match": {
-                                    "_id": experts_id
-                                }
-                            }
-                        };
-                        var self = this;
-                        $.ajax({
-                            type: "post",
-                            data: JSON.stringify(queryData),
-                            url: "http://192.168.43.123:9200/expert/info/_search",
-                            success(data) {
-                                if (data.hits.total > 0) {
-                                    self.formItem = data.hits.hits[0]._source
-                                }
+                        AJAX.getExperts(experts_id).then((data) => {
+                            if (data.hits.total > 0) {
+                                self.formItem = data.hits.hits[0]._source
                             }
                         })
-
-
-                        const data = {
-                            "query": {
-                                "match": {
-                                    "data_id": experts_id
-                                }
-                            },
-                        }
-                        $.ajax({
-                            type: "post",
-                            url: "http://192.168.43.123:9200/expert/picture/_search?",
-                            data: JSON.stringify(data),
-                            success(data) {
-                                if (data.hits.total > 0) {
-                                    self.$refs.photo_img.src = data.hits.hits[0]._source.photo;
-                                }
+                        AJAX.getExpertsPhoto(experts_id).then((data) => {
+                            if (data.hits.total > 0) {
+                                self.$refs.photo_img.src = data.hits.hits[0]._source.photo;
+                                self.filesrc = data.hits.hits[0]._source.photo;
                             }
                         })
                     }

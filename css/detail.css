@@ -1,0 +1,198 @@
+﻿.main-container .experts-detail-container{
+    margin-top: 60px;
+    height: calc(100% - 60px - 60px);
+    width: calc(100% - 600px);
+    margin-left: 300px;
+}
+
+.main-container .experts-detail-container .left-panel{
+    width: 200px;
+    height: 100%;
+    float: left;
+}
+.main-container .experts-detail-container .right-panel{
+    width: calc(100% - 200px - 30px);
+    margin-left: 30px;
+    height: 100%;
+    float: left;
+}
+.main-container .experts-detail-container .left-panel .space{
+    height: 5px;
+}
+.left-panel .show-text{
+    overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.main-container .experts-detail-container .left-panel .duty-show{
+    margin-top: 5px;
+    height: 20px;
+    margin-bottom: 5px;
+}
+.duty-show .icon{
+    width: 16px;
+    height: 18px;
+    float: left;
+    background: url('./images/edit.png') no-repeat center center;
+}
+.duty-show .text{
+  
+  margin-left: 5px;
+  font-size: 14px;
+}
+.main-container .experts-detail-container .left-panel .contact{
+    font-size:16px;
+    font-weight:400;
+    color:rgba(11,172,211,1);
+}
+
+.main-container .experts-detail-container .left-panel .company
+{
+    color: #909090;
+    font-size: 14px;
+}
+
+.main-container .experts-detail-container .left-panel .major-text
+{
+    color: #909090;
+    font-size: 12px;
+    margin-top: 20px;
+}
+.metting-show-wapper{
+    height: 100%;
+    background-color: white;
+    overflow: auto;
+}
+.metting-show-wapper.slider-down{
+    height: calc(100% - 400px);   
+}
+
+.metting-show-unit{
+    background-color: white;
+    height:40px;
+    line-height: 40px;
+    box-sizing: border-box;
+    border: 1px solid transparent;
+}
+.metting-show-unit.force-background{
+ background-color: #FAFAFA ;   
+}
+.metting-show-unit.selected
+{
+    background-color: rgba(11,172,211,0.3) !important;
+    border: 1px solid #0BACD3;
+}
+.metting-show-unit .metting-msg
+{
+    float: left;
+    margin-left: 16px;
+    color: #666666;
+    font-size: 14px;
+}
+.metting-show-unit .time{
+    float: right;
+    margin-right: 100px;
+    color: #666666;
+    font-size: 14px;
+}
+
+.right-panel .ivu-tabs.ivu-tabs-card>.ivu-tabs-bar .ivu-tabs-tab{
+    border:none;
+}
+.right-panel .ivu-tabs-bar
+{
+    margin-bottom: 0px;
+    border-bottom:none
+}
+.right-panel .ivu-tabs-content
+{
+    height: 100%;
+}
+
+.detail-title{
+    background-color: #D6D8DE;
+    height: 40px;
+    line-height: 40px;
+    color: #666666;
+    font-size: 14px;
+}
+.metting-detail-wapper{
+
+    height:calc(400px - 10px);
+    margin-top: 10px;
+    
+}
+.metting-detail-wapper .top-panel
+{
+    height: 160px;
+    
+}
+
+.metting-detail-wapper .top-panel .time-show-panel
+{
+    width: 245px;
+    height: 100%;
+    float: left;
+    margin-right: 10px;
+    background-color: red;
+}
+.metting-detail-wapper .top-panel .time-show-panel .time-show
+{
+    height: 40px;
+    line-height: 40px;
+    font-size: 14px;
+    background-color: white;
+    text-indent: 16px;
+}
+.metting-detail-wapper .top-panel .time-show-panel .detail-title.time
+{
+    text-indent: 16px;
+}
+
+.metting-detail-wapper .top-panel .voting-show-panel
+{
+    width: calc(100% - 245px - 10px);
+    height: 100%;
+    float: left;
+}
+
+.metting-detail-wapper .top-panel .voting-show-panel table.voting-table
+{
+    width: 100%;
+    height: 100%;
+    table-layout:fixed;
+}
+table.voting-table thead tr{
+    background-color: #D6D8DE;
+}
+
+table.voting-table th{
+    height: 40px;
+    font-weight: 400;
+    font-size: 14px;
+}
+table.voting-table tr{
+    height: 40px;
+    background-color: white;
+}
+table.voting-table tr td{
+    text-align: center;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.metting-detail-wapper .buttom-panel
+{
+    margin-top: 10px;
+    height: calc(400px - 160px - 10px);
+    background-color: white;
+    
+}
+
+.metting-detail-wapper .buttom-panel .content
+{
+    padding-left: 16px;
+    max-height: calc(100% - 40px);
+    overflow: auto;
+}

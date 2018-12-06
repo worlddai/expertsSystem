@@ -1,9 +1,9 @@
 ﻿<div class="experts-unit">
-    <div v-on:mouseenter = "delete_show = true" v-on:mouseleave ="delete_show = false" class="experts-photo-wapper">
-        <img ref="img_photo" class="experts-photo"></img>
+    <div  v-on:mouseenter = "delete_show = true" v-on:mouseleave ="delete_show = false" class="experts-photo-wapper">
+        <img v-on:mousedown = "$emit('on-detail',expertsData.data_id)"  ref="img_photo" class="experts-photo"></img>
         <div class="name">{{expertsData.name}}</div>
-        <div v-if = "delete_show" @click = "$emit('on-delete',expertsData)" class="rectangle"></div>
-        <Icon v-if = "delete_show" @click = "$emit('on-delete',expertsData)"  class="rectangle-img" type="ios-trash-outline"></Icon>
+        <div v-if = "delete_show" @click.stop = "$emit('on-delete',expertsData)" class="rectangle"></div>
+        <Icon v-if = "delete_show" @click.stop = "$emit('on-delete',expertsData)"  class="rectangle-img" type="ios-trash-outline"></Icon>
     </div>
     <!-- <Icon type="ios-trash-outline" /> -->
     <div class="experts-photo-toolbar">

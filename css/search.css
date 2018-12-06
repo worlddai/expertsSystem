@@ -1,0 +1,51 @@
+﻿.search-container{
+    width: calc(100% - 600px);
+    margin-left: 300px;
+}
+.search-condition{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.search-condition .msg
+{
+   
+}
+.search-condition .msg p
+{
+    float: left;
+    font-size: 14px;
+    color:#666666;
+}
+.search-condition .msg p:nth-child(2)
+{
+    color:#0BACD3;
+    font-size: 16px;
+    font-weight: bold;
+}
+.search-condition .line
+{
+    position: relative;
+}
+.search-condition .line .basic
+{
+    height: 1px;
+    border: 1px solid #D6D8DE;
+}
+.search-condition .line .blue
+{
+    width: 68px;
+    position: absolute;
+    height: 4px;
+    background-color: #0BACD3;
+    top: -1px;
+}
+.result-container {
+    display: flex;
+    flex-flow: wrap;
+    justify-content: flex-start;
+}
+
+.result-container .experts-unit{
+    /* float: left; */
+    margin-right: 30px;
+}

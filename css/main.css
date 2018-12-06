@@ -58,6 +58,27 @@
     height: 160px;
    
 }
+
+.experts-container{
+    height: calc(100% - 80px - 100px);
+    width: 1000px;
+    margin: auto;
+    /* padding-left: 20%; */
+    /* padding-right: 20%; */
+    display: flex;
+    /* justify-content: left; */
+    flex-wrap: wrap;
+}
+
+.experts-container .experts-row{
+    height: 260px;
+    width: 100%;;
+  
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
 .ivu-card-body{
     padding: 0px !important;
 }
@@ -100,10 +121,16 @@ html,body{
 .main-header{
     height: 80px;
     background-color: white;
+    box-shadow: -1px 1px 6px 1px rgba(0,0,0,.2);
+    border-color: #eee;
 }
-.main-container{
-    height: calc(100% - 80px);
+.main-container {
+    
     background-color: #F1F1F1
+}
+.main-container.fixed
+{
+    height: calc(100% - 80px);
 }
 .logo{
     background: url('./images/logo_small.png') no-repeat;
@@ -162,116 +189,14 @@ html,body{
     margin-right: 300px;
 
 }
-.experts-container{
-    height: calc(100% - 80px - 100px);
-    width: calc(100% - 600px);
-    margin-left: 300px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-}
-.experts-container .experts-row{
-    height: 260px;
-    width: 100%;;
-  
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-}
-.experts-container .experts-row .experts-unit
-{
-    width: calc(144px + 2 * 6px);
-    /* height: calc(150px * 3 / 2 + 40px); */
-   /* background-color: red; */
-}
-.experts-container .experts-row .experts-unit .experts-photo-wapper{
+
+
+.page-wapper{
+    position: absolute;
     width: 100%;
-    height: calc(144px *3 / 2 + 20px +6px);
-    background-color:#FFFFFF;
-    overflow: hidden;
-    position: relative;
+    bottom: calc(16px + 20px);
 }
-.experts-container .experts-row .experts-unit .experts-photo-wapper .rectangle
-{
-    cursor: pointer;
-    width:40px;
-    height:40px;
-    background: #CF2E2E;
-    transform:rotate(45deg);
-    -ms-transform:rotate(45deg); /* Internet Explorer */
-    -moz-transform:rotate(45deg); /* Firefox */
-    -webkit-transform:rotate(45deg); /* Safari 和 Chrome */
-    -o-transform:rotate(45deg); /* Opera */
-    position: absolute;
-    right: -20px;
-    top: -20px;
-}
-.experts-container .experts-row .experts-unit .experts-photo-wapper .rectangle-img
-{
-    cursor: pointer;
-    width: 16px;
-    height: 16px;
-    position: absolute;
-    top: 0px;
-    right: 0px;
-    color: white;
-    line-height: 16px;
-    font-size: 18px;
-}
-.experts-container .experts-row .experts-unit .experts-photo-wapper img.experts-photo{
-    width: 144px;
-    height: calc(144px * 3 / 2);
-    background-color: blue;
-    margin: 6px 0px 0px 6px;
-}
-.experts-container .experts-row .experts-unit .experts-photo-wapper div.name{
-    height: 20px;
-    line-height: 20px;
-    text-align: center;
-    color:#343333;
-    font-size: 16px;
-}
-.experts-container .experts-row .experts-unit .experts-photo-toolbar{
-    /* background-color: red; */
-    height: 20px;
-    margin-top: 2px;
-    overflow: hidden;
-}
-.experts-container .experts-row .experts-unit .experts-photo-toolbar .magor-title{
-    float: left;
-    color: #909090;
-    font-size: 12px;
-}
-.experts-container .experts-row .experts-unit .experts-photo-toolbar .edit-icon{
-    float: right;
-    width: 12px;
-    height: 12px;
-    background:url('./images/edit.png') no-repeat;
-    margin-top: 4px;
-    margin-right: 2px
-}
-.experts-container .experts-row .experts-unit .experts-photo-toolbar .edit-title{
-    float: right;
-    color: #909090;
-    cursor: pointer;
-    font-size: 12px;
-}
-.experts-container .experts-row .experts-unit .experts-photo-toolbar .edit-title:hover{
-    font-size: 15px;
-}
-.experts-container .experts-row .experts-unit .experts-show
-{
-    max-height: 52px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-.experts-container .experts-row .experts-unit .ellipse
-{
-    font-size: 8px;
-}
-
-
-.page-number{
+.page-wapper .page-number{
     text-align: center;
     margin-top: 10px;
 }

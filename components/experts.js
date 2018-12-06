@@ -10,28 +10,11 @@
             methods: {
                 loadImg() {
                     const self = this;
-                    //--need_service
-                    const data = {
-                        "query": {  
-                            "match": {
-                                "data_id": this.expertsData.data_id
-                            }
-                        },
-                    }
-                    $.ajax({
-                        type: "post",
-                        url: "http://192.168.43.123:9200/expert/picture/_search?",
-                        data: JSON.stringify(data),
-                        success(data) {
-                            if (data.hits.total > 0) {
-                                self.$refs.img_photo.src = data.hits.hits[0]._source.photo;
-                            }
+                    AJAX.getExpertsPhoto(this.expertsData.data_id).then((data) => {
+                        if (data.hits.total > 0) {
+                            self.$refs.img_photo.src = data.hits.hits[0]._source.photo;
                         }
                     })
-
-                    // setTimeout(() => {
-                    //     self.$refs.img_photo.src = "./css/images/logo_big.png"
-                    // }, 100)
                 }
             },
             props: ["expertsData"],

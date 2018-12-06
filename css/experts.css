@@ -1,0 +1,103 @@
+﻿
+.experts-unit
+{
+    width: calc(130px + 2 * 6px);
+}
+.experts-unit.main-experts{
+    margin-right: calc((1000px - (5 * 142px))/4);
+}
+.experts-unit.main-experts:nth-child(5)
+{
+    margin-right:0px;
+}
+.experts-unit.main-experts:nth-child(10)
+{
+    margin-right:0px;
+}
+.experts-unit .experts-photo-wapper{
+    width: 100%;
+    height: calc(130px *3 / 2 + 20px +6px);
+    background-color:#FFFFFF;
+    overflow: hidden;
+    position: relative;
+    box-shadow: -1px 1px 6px 1px rgba(0,0,0,.2);
+    border-color: #eee;
+}
+.experts-unit .experts-photo-wapper .rectangle
+{
+    cursor: pointer;
+    width:40px;
+    height:40px;
+    background: #CF2E2E;
+    transform:rotate(45deg);
+    -ms-transform:rotate(45deg); /* Internet Explorer */
+    -moz-transform:rotate(45deg); /* Firefox */
+    -webkit-transform:rotate(45deg); /* Safari 和 Chrome */
+    -o-transform:rotate(45deg); /* Opera */
+    position: absolute;
+    right: -20px;
+    top: -20px;
+}
+.experts-unit .experts-photo-wapper .rectangle-img
+{
+    cursor: pointer;
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    color: white;
+    line-height: 16px;
+    font-size: 18px;
+}
+.experts-unit .experts-photo-wapper img.experts-photo{
+    width: 130px;
+    height: calc(130px * 3 / 2);
+    background-color: blue;
+    margin: 6px 0px 0px 6px;
+}
+ .experts-unit .experts-photo-wapper div.name{
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    color:#343333;
+    font-size: 16px;
+}
+.experts-unit .experts-photo-toolbar{
+    /* background-color: red; */
+    height: 20px;
+    margin-top: 2px;
+    overflow: hidden;
+}
+.experts-unit .experts-photo-toolbar .magor-title{
+    float: left;
+    color: #909090;
+    font-size: 12px;
+}
+.experts-unit .experts-photo-toolbar .edit-icon{
+    float: right;
+    width: 12px;
+    height: 12px;
+    background:url('./images/edit.png') no-repeat;
+    margin-top: 4px;
+    margin-right: 2px
+}
+.experts-unit .experts-photo-toolbar .edit-title{
+    float: right;
+    color: #909090;
+    cursor: pointer;
+    font-size: 12px;
+}
+.experts-unit .experts-photo-toolbar .edit-title:hover{
+    font-size: 15px;
+}
+.experts-unit .experts-show
+{
+    max-height: 52px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.experts-unit .ellipse
+{
+    font-size: 8px;
+}

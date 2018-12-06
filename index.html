@@ -4,72 +4,199 @@
 <head>
     <meta charset="utf-8">
     <title>iview example</title>
-    <script type="text/javascript" src="lib/vue.js"></script>
+
     <link rel="stylesheet" type="text/css" href="lib/iview/iview.css">
     <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/detail.css">
+    <link rel="stylesheet" type="text/css" href="css/experts.css">
+    <link rel="stylesheet" type="text/css" href="css/search.css">
+
+    <script type="text/javascript" src="lib/vue.js"></script>
     <script type="text/javascript" src="lib/iview/iview.min.js"></script>
+    <script type="text/javascript" src="lib/vue-router.min.js"></script>
+
     <script type="text/javascript" src="lib/jquery.min.js"></script>
     <script type="text/javascript" src="util/image_uploader.js"></script>
     <script type="text/javascript" src="js/main.js"></script>
+    <script type="text/javascript" src="js/ajax.js"></script>
+    <script type="text/javascript" src="js/config.js"></script>
+    <!-- 异步组件 -->
     <script type="text/javascript" src="components/addUpdateExperts.js"></script>
     <script type="text/javascript" src="components/experts.js"></script>
+    <script type="text/javascript" src="components/search.js"></script>
+    <!-- 同步组件（路由） -->
+    <script type="text/javascript" src="components/home.js"></script>
+    <script type="text/javascript" src="components/detail.js"></script>
 
 
 </head>
 
 <body>
     <div id="app" style="height:100%;">
-
-        <Layout style="height: 100%">
-            <i-header class="main-header">
-                <div class="logo"></div>
-                <div class="main-title">专家管理系统</div>
-                <i-input class="home-search" @on-keyup="searchHandel" size="small" icon="ios-search" v-model="search_value"
-                    placeholder="请输入关键字"></i-input>
-            </i-header>
-            <i-content class="main-container">
-
-                <div class="tool-bar">
-                    <i-select class="experts-select-type" v-model="experts_type_value" size="small" style="width:200px">
-                        <i-option v-for="item in experts_type" :value="item.value" :key="item.value">{{ item.label }}</i-option>
-                    </i-select>
-                    <i-button @click="showAddUpdateExperts(null)" class="main-button add-experts-btn" size="small" type="primary"
-                        icon="ios-add">添加专家</i-button>
-                </div>
-                <div class="experts-container">
-                    <div class="experts-row">
-                        <experts @on-delete="showDeleteExperts" @on-edit="showAddUpdateExperts" ref="dyj123" v-for="item in data_list_prev"
-                            :experts-data="item"></experts>
-                    </div>
-                    <div ref="bcd" class="experts-row">
-                        <experts @on-delete="showDeleteExperts" @onEdit="showAddUpdateExperts" v-for="item in data_list_app"
-                            :experts-data="item"></experts>
-                    </div>
-                </div>
-               
-                <Modal v-model="delete_experts.model_show" :mask-closable="false" title="删除专家" :loading="true" @on-ok="deleteExperts">
-                    <p>确认删除专家 {{delete_experts.willbeDelete ? delete_experts.willbeDelete.name : 'null'}} ?</p>
-                    <p>删除后将不可恢复。</p>
-                </Modal>
-                
-                
-                
-        
-                <!-- <i-button ref = "ada" size="small" type="error" ></i-button> -->
-                <add-update-experts ref="add_update_experts" />
-            </i-content>
-        </Layout>
-        <Page class="page-number" @on-change = "onPageChange" :total="100" />
+        <router-view></router-view>
     </div>
+    <template id='home'>
+        <home></home>
+    </template>
+    <template id='detail'>
+        <detail></detail>
+    </template>
+    <template id="home-component">
+        <div style="width: 100%;height: 100%">
+            <Layout style="height: 100%">
+                <i-header class="main-header">
+                    <div class="logo"></div>
+                    <div class="main-title">专家管理系统</div>
+                    <i-input class="home-search" @on-keyup="searchHandel" size="small" icon="ios-search" v-model="search_value"
+                        placeholder="请输入关键字"></i-input>
+                </i-header>
+                <i-content class="main-container" :class="{'fixed':!search_value}">
+
+                    <div v-if="!search_value" class="tool-bar">
+                        <i-select class="experts-select-type" v-model="experts_type_value" size="small" style="width:200px">
+                            <i-option v-for="item in experts_type" :value="item.value" :key="item.value">{{ item.label
+                                }}</i-option>
+                        </i-select>
+                        <i-button @click="showAddUpdateExperts(null)" class="main-button add-experts-btn" size="small"
+                            type="primary" icon="ios-add">添加专家</i-button>
+                    </div>
+                    <div v-if="!search_value" class="experts-container">
+                        <experts class ="main-experts" @on-detail="goDetail" ref="experts_components" @on-delete="showDeleteExperts" @on-edit="showAddUpdateExperts"
+                            v-for="item in data_list" :key ="item.data_id" :experts-data="item"></experts>
+                        <!-- <div class="experts-row">
+                            <experts @on-detail="goDetail" @on-delete="showDeleteExperts" @on-edit="showAddUpdateExperts"
+                                 v-for="item in data_list_prev" :experts-data="item"></experts>
+                        </div>
+                        <div ref="bcd" class="experts-row">
+                            <experts @on-detail="goDetail" @on-delete="showDeleteExperts" @onEdit="showAddUpdateExperts"
+                                v-for="item in data_list_app" :experts-data="item"></experts>
+                        </div> -->
+                    </div>
+                    <search @on-detail="goDetail" @on-delete="showDeleteExperts" @on-edit="showAddUpdateExperts" v-if="!!search_value"
+                        ref="search_component"></search>
+                    <Modal v-model="delete_experts.model_show" :mask-closable="false" title="删除专家" :loading="true"
+                        @on-ok="deleteExperts">
+                        <p>确认删除专家 {{delete_experts.willbeDelete ? delete_experts.willbeDelete.name : 'null'}} ?</p>
+                        <p>删除后将不可恢复。</p>
+                    </Modal>
 
 
 
 
+                    <!-- <i-button ref = "ada" size="small" type="error" ></i-button> -->
+                    <add-update-experts @reflash="reflashData" ref="add_update_experts" />
+                </i-content>
 
-    <!-- <i-button @click="show">Click me!</i-button> -->
+            </Layout>
+            <div v-if="!search_value" class="page-wapper">
+                <Page class="page-number" @on-change="onPageChange" :total="total_num" />
+            </div>
+        </div>
+
+    </template>
+    <template id="detail-component">
+        <div style="width:100;height:100%">
+            <Layout style="height: 100%">
+                <i-header class="main-header">
+                    <div class="logo"></div>
+                    <div class="main-title">专家管理系统</div>
+                </i-header>
+                <i-content class="main-container">
+
+                    <div class="experts-detail-container">
+                        <div class="left-panel">
+                            <div class="experts-unit">
+                                <div class="experts-photo-wapper">
+                                    <img ref="detail_photo" class="experts-photo"></img>
+                                    <div class="name">{{basicData.name}}</div>
+                                </div>
+                            </div>
+                            <div class="duty-show">
+                                <div class="icon"></div>
+                                <div class="text show-text">{{basicData.duty}}</div>
+                            </div>
+                            <div v-for="item in basicData.contact" class="contact show-text">
+                                {{getContactType(item.type)}} : {{item.value}}
+                            </div>
+                            <div class="space"></div>
+                            <div class="company show-text">
+                                所属单位：
+                            </div>
+                            <div class="company show-text">{{basicData.company ? basicData.company.prepend.join(" ") :
+                                ""}}</div>
+                            <div class="company show-text">{{basicData.company ? basicData.company.detail : ""}}</div>
+                            <div class="major-text">专业领域</div>
+                            <Tag class="tags" v-for="item in basicData.major" :key="item" :name="item">{{item}}</Tag>
+                        </div>
+                        <div class="right-panel">
+                            <Tabs style="height:100%" type="card" value="metting-msg">
+                                <tab-pane style="height:100%" label="参会信息" name="metting-msg">
+                                    <div class="metting-show-wapper" :class="{'slider-down':!!selected}">
+                                        <div @click="selected = item.data_id" v-for="(item,index) in test" :class="{'metting-show-unit':true,'force-background':index%2 == 0,'selected':selected && item.data_id == selected}">
+                                            <div class="metting-msg">参加了{{item.name}}会议</div>
+                                            <div class="time">{{item.date}}</div>
+                                        </div>
+                                    </div>
+                                    <div class="metting-detail-wapper">
+                                        <div class="top-panel">
+                                            <div class="time-show-panel">
+                                                <div class="detail-title time">开始时间</div>
+                                                <div class="time-show">2018-12-12 18:30:30</div>
+                                                <div class="detail-title time">结束时间</div>
+                                                <div class="time-show">2018-12-12 19:30:30</div>
+                                            </div>
+                                            <div class="voting-show-panel">
+                                                <table cellspacing=0 class="voting-table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>表决名称</th>
+                                                            <th>表决票数</th>
+                                                            <th>表决内容</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>111111111</td>
+                                                            <td>asdadas</td>
+                                                            <td>asdadas</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>asdadas</td>
+                                                            <td>asdadas</td>
+                                                            <td>asdadas</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>asdadas</td>
+                                                            <td>asdadas</td>
+                                                            <td>asdadas</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+
+                                            </div>
+                                        </div>
+                                        <div class="buttom-panel">
+                                            <div class="detail-title" style="text-align:center;">批注</div>
+                                            <div class="content">
+                                                行啊大苏打实打实大大十大
+                                            </div>
+                                        </div>
+                                    </div>
+                                </tab-pane>
+                                <tab-pane label="专家信息" disabled name="experts-msg"></tab-pane>
+                            </Tabs>
+                        </div>
+                    </div>
 
 
-  
+                </i-content>
+
+            </Layout>
+
+        </div>
+    </template>
+
+
     <script type="text/javascript" src="js/app.js"></script>
 
 </body>

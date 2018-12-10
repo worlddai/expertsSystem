@@ -410,7 +410,6 @@
                 }
             },
             mounted: function () {
-                window.aaa = this.$refs.abcdef;
                 this.loadConfig();
             }
         })

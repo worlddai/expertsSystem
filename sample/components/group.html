@@ -1,0 +1,33 @@
+﻿<div class="group-parent" v-on:mouseenter = "delete_show = true" v-on:mouseleave ="delete_show = false">
+    <div v-if="!isEdit" class="name">{{name}}</div>
+    <input v-if="isEdit" placeholder="请输入自定义分组名称" v-model = "item.name" class="name-input"></input>
+    <div class="container" @click="addExperts">
+        <Dropdown :transfer="true" v-show="isEdit && !experts_data.length" trigger="custom" class="add-experts-show-wapper" :visible="add_experts_menu_show">
+            <div    class="add-experts-show">
+
+            </div>
+            <dropdown-menu class="group-add-experts-parent" slot="list">
+                <i-input class="search" @on-keyup="onAddSearch" size="small" icon="ios-search" v-model="add_search_value"
+                    placeholder="请输入关键字"></i-input>
+                <div class="container">
+                    <div class="item-show" @click="onItemClick(item)" :class="{active:isActiveExperts(item)}"
+                        v-for="item in all_experts">{{item.name}}
+                        <div class="rectangle" :class="{active:isActiveExperts(item)}"></div>
+                        <Icon class="rectangle-img" type="md-checkmark"></Icon>
+                    </div>
+                    <div style="clear:both"></div>
+                </div>  
+                <div style="text-align: right;margin:10px;">
+                    <i-button type="primary" @click="ensureAdd">确认添加</i-button>
+                </div>
+            </dropdown-menu>
+        </Dropdown>
+
+        <div class="name-show" v-for="item in experts_data">{{item.name}}</div>
+    </div>
+    <div class="text">设置抽取人数</div>
+    <input :readonly="sample_checked" class="input" type="number" :max="experts_data.length" v-model="sample_num"></input>人
+    <div v-if="isEdit" @click.stop = "$emit('on-delete')" class = "delete-group">
+            <Icon v-if = "delete_show" @click.stop = "$emit('on-delete')"  class="delete-group-img" type="ios-trash-outline"></Icon>
+    </div>
+</div>

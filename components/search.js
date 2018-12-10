@@ -5,15 +5,50 @@
             data: () => {
                 return {
                     key: "",
-                    nameSearch: [
+                    basic_search_condition: [
+                        {
+                            name: "姓名",
+                            field_key: "name",
+                            search_key: ['name'],
+                        },
+                        {
+                            name: "职务",
+                            field_key: "duty",
+                            search_key: ['duty'],
+                        },
+                        {
+                            name: "单位",
+                            field_key: "company",
+                            search_key: ['company.prepend', 'company.detail'],
+                        },
+                        {
+                            name: "联系方式",
+                            field_key: "contact",
+                            search_key: ['contact.value'],
+                        },
+                        {
+                            name: "专业领域",
+                            field_key: "major",
+                            search_key: ['major'],
+                        }
                     ],
-                    mettingSearch: [
-                    ],
-                    annotateSearch: [
-                    ]
+                    mettingSearch: []
+                }
+            },
+            computed: {
+                allnone() {
+                    return this.basic_search_condition.every((d) => {
+                        const tg = this[`${d.field_key}Search`];
+                        if (!tg)
+                            return true;
+                        return tg.length == 0;
+                    }, this)
                 }
             },
             methods: {
+                oneSearchEmpty(key) {
+                    return !this[`${key}Search`] || this[`${key}Search`].length == 0;
+                },
                 goDetail(id) {
                     this.$emit('on-detail', id)
                 },
@@ -25,57 +60,35 @@
                 },
                 doSearch(key) {
                     this.key = key;
-                    setTimeout(() => {
-                        var createData = () => {
-                            return {
-                                "data_id": 1000 + (Math.random().toFixed(3) * 1000),
-                                "name": "专家1",
-                                "duty": "少先队队长兼班花",
-                                "company": {
-                                    "prepend": [
-                                        "北京",
-                                        "西二旗"
-                                    ],
-                                    "detail": "辉煌国际酒店"
-                                },
-                                "contact": [
-                                    {
-                                        "type": "office",
-                                        "value": "13189991222"
-                                    },
-                                    {
-                                        "type": "mobile",
-                                        "value": "051245445555"
-                                    }
-                                ],
-                                "major": [
-                                    "科学",
-                                    "人文",
-                                    "地理"
-                                ]
+                    const self = this;
+                    this.basic_search_condition.map(d => {
+                        AJAX.queryExperts({
+                            "query": {
+                                "multi_match": {
+                                    "query": this.key,
+                                    "fields": d.search_key,
+                                    "operator": "and",
+                                    "fuzziness": "AUTO"
+                                }
                             }
-                        }
-                        const arr = [];
-                        for (var i = 0; i < Math.random() * 15; i++) {
-                            arr.push(createData());
-                        }
-                        this.nameSearch = arr;
-                        const arr2 = [];
-                        for (var i = 0; i < Math.random() * 15; i++) {
-                            arr2.push(createData());
-                        }
-                        this.mettingSearch = arr2;
-                        const arr3 = [];
-                        for (var i = 0; i < Math.random() * 15; i++) {
-                            arr3.push(createData());
-                        }
-                        this.annotateSearch = arr3;
-                    }, 200);
+                        }).then(data => {
+                            self[`${d.field_key}Search`] = data.hits.hits.map((d) => {
+                                d._source.data_id = d._id;
+                                return d._source;
+                            });
+                            //--驱使ui刷新
+                            self.basic_search_condition.push(self.basic_search_condition.pop())
+                        })
+                    })
                 }
             },
-            // props: ["expertsData"],
             mounted: function () {
-
+                var self = this;
+                this._self = this;
+                window.aaa = this;
+                this.basic_search_condition.map((d) => {
+                    self[`${d.field_key}Search`] = new Array();
+                })
             }
         })
     });

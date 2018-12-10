@@ -1,27 +1,90 @@
 ﻿[
     {
-        "title": "北京",
+        "title": "智力天赋",
         "children": [
             {
-                "frequently": true,
-                "title": "故宫112"
-            },
-            {
-                "title": "天坛"
-            },
-            {
-                "title": "北京分类1",
+                "title": "施法范围增益",
                 "children": [
                     {
-                        "title": "北京分类1-故宫",
+                        "frequently": true,
+                        "title": "施法范围增强"
+                    },
+                    {
+                        "title": "抵抗施法范围"
+                    }
+                ]
+            },
+            {
+                "title": "法术强度增益",
+                "children": [
+                    {
+                        "frequently": true,
+                        "title": "法术伤害增强"
+                    },
+                    {
+                        "title": "法术强度增强"
+                    }
+                ]
+            },
+            {
+                "title": "施法成功率",
+                "children": [
+                    {
+                        "frequently": true,
+                        "title": "施法成功率百分比增强"
+                    },
+                    {
+                        "title": "成功率绝对值增强"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "title": "武力天赋",
+        "children": [
+            {
+                "title": "攻击速度增益",
+                "children": [
+                    {
+                        "title": "攻击1次触发2次",
                         "frequently": true
                     },
                     {
-                        "title": "北京分类1-天坛345"
+                        "title": "攻速增益30%"
                     },
                     {
-                        "title": "北京分类1-王府井678",
+                        "title": "攻速增益200"
+                    }
+                ]
+            },
+            {
+                "title": "攻击力增益",
+                "children": [
+                    {
+                        "title": "30%概率重击",
                         "frequently": true
+                    },
+                    {
+                        "title": "没3次攻击必暴击"
+                    },
+                    {
+                        "title": "攻击力增加30%"
+                    }
+                ]
+            },
+            {
+                "title": "命中率增益",
+                "children": [
+                    {
+                        "title": "提升10%命中概率",
+                        "frequently": true
+                    },
+                    {
+                        "title": "连续2次未命中下次必中"
+                    },
+                    {
+                        "title": "命中率提升20"
                     }
                 ]
             }

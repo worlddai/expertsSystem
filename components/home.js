@@ -8,11 +8,11 @@ Vue.component('home', {
             experts_type: [
                 {
                     value: 'New York',
-                    label: 'New York'
+                    label: '分类1'
                 },
                 {
                     value: 'London',
-                    label: 'London'
+                    label: '分类2'
                 }],
             data_list: [],
             delete_experts: {
@@ -43,7 +43,6 @@ Vue.component('home', {
         deleteExperts() {
             //--need_service
             var self = this;
-            debugger;
             $.ajax({
                 type: 'delete',
                 url: `${gConfig.host}/expert/info/${this.delete_experts.willbeDelete.data_id}?refresh=wait_for`,
@@ -94,9 +93,10 @@ Vue.component('home', {
             this.curIndex = nIndex;
             this.reqExpertsData((nIndex - 1) * 10, nIndex * 10);
         },
-        searchHandel() {
+        searchHandel(e) {
             this.$refs.search_component.doSearch(this.search_value);
         }
+
     },
     mounted() {
         this.reqExpertsData(0, 10);

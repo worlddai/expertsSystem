@@ -137,3 +137,97 @@ AJAX.updatePhoto = function (expert_id, postData) {
         })
     })
 }
+
+AJAX.getExpertsMetting = function (expert_id) {
+
+    return new Promise((resove, reject) => {
+        const data = {
+            "query": {
+                "multi_match": {
+                    "query": expert_id,
+                    "fields": ["experts.id"]
+                }
+            }
+        };
+        $.ajax({
+            type: "post",
+            contentType: 'application/json',
+            url: `${gConfig.host}/meeting/info/_search`,
+            data: JSON.stringify(data),
+            success(data) {
+                resove(data);
+            }
+        })
+    })
+
+}
+
+AJAX.pushMetting = function () {
+    const postData = {
+        // "data_id": 1000 + (Math.random().toFixed(3) * 1000),
+        "name": `第一次代表大会${Math.random().toFixed(2) * 100}`,
+        "date": new Date().getTime(),
+        "experts": [{
+            "id": "dJqRk2cBbbNc8MaPNkWL",
+            "voting": [
+                {
+                    "name": "废后表决",
+                    "total": 20,
+                    "voting_data": 0
+                }
+            ]
+            ,
+            "sing_in_time": new Date().getTime(),
+            "sing_down_time": new Date().getTime(),
+            "annotate": ["daddddddddddddddddddddddd", "dadddddddddddddddddd"]
+        },
+        {
+            "id": "cpqQk2cBbbNc8MaPT0WR",
+            "voting": [
+                {
+                    "name": "废后表决",
+                    "voting_data": 1,
+                    "total": 20,
+                },
+                {
+                    "name": "废后表决",
+                    "voting_data": 1,
+                    "total": 20,
+                }, {
+                    "name": "废后表决",
+                    "voting_data": 1,
+                    "total": 20,
+                }, {
+                    "name": "废后表决",
+                    "voting_data": 1,
+                    "total": 20,
+                }, {
+                    "name": "废后表决",
+                    "voting_data": 1,
+                    "total": 20,
+                }, {
+                    "name": "废后表决",
+                    "voting_data": 1,
+                    "total": 20,
+                }
+            ]
+            ,
+            "sing_in_time": new Date().getTime() + 100000,
+            "sing_down_time": new Date().getTime() + 100000,
+            "annotate": ["daddddddddddddddddddddddd", "dadddddddddddddddddd"]
+        }]
+    }
+
+    return new Promise((resove, reject) => {
+        $.ajax({
+            "type": "post",
+            "contentType": 'application/json',
+            "url": `${gConfig.host}/meeting/info?refresh=wait_for`,
+            "data": JSON.stringify(postData),
+            "success": (data) => {
+                resove(data);
+            }
+        })
+    })
+}
+

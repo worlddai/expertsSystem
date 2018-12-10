@@ -2,6 +2,12 @@
     width: calc(100% - 600px);
     margin-left: 300px;
 }
+.search-container .none-result-show-tip{
+    color:#999;
+    font-size: 18px;
+    text-align: center;
+    margin-top: 300px
+}
 .search-condition{
     margin-top: 20px;
     margin-bottom: 20px;

@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <title>iview example</title>
-
+    <link rel="icon" href="data:;base64,=">
     <link rel="stylesheet" type="text/css" href="lib/iview/iview.css">
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <link rel="stylesheet" type="text/css" href="css/detail.css">
@@ -72,7 +72,7 @@
                                 v-for="item in data_list_app" :experts-data="item"></experts>
                         </div> -->
                     </div>
-                    <search @on-detail="goDetail" @on-delete="showDeleteExperts" @on-edit="showAddUpdateExperts" v-if="!!search_value"
+                    <search @on-detail="goDetail" @on-delete="showDeleteExperts" @on-edit="showAddUpdateExperts" v-show="!!search_value"
                         ref="search_component"></search>
                     <Modal v-model="delete_experts.model_show" :mask-closable="false" title="删除专家" :loading="true"
                         @on-ok="deleteExperts">
@@ -101,7 +101,7 @@
                     <div class="logo"></div>
                     <div class="main-title">专家管理系统</div>
                 </i-header>
-                <i-content class="main-container">
+                <i-content class="main-container fixed">
 
                     <div class="experts-detail-container">
                         <div class="left-panel">
@@ -132,18 +132,19 @@
                             <Tabs style="height:100%" type="card" value="metting-msg">
                                 <tab-pane style="height:100%" label="参会信息" name="metting-msg">
                                     <div class="metting-show-wapper" :class="{'slider-down':!!selected}">
-                                        <div @click="selected = item.data_id" v-for="(item,index) in test" :class="{'metting-show-unit':true,'force-background':index%2 == 0,'selected':selected && item.data_id == selected}">
-                                            <div class="metting-msg">参加了{{item.name}}会议</div>
-                                            <div class="time">{{item.date}}</div>
+                                        <div v-if = "!mettingData.length" class = "none-show">没有查找到记录</div>
+                                        <div @click="selected = item" v-for="(item,index) in mettingData" :class="{'metting-show-unit':true,'force-background':index%2 == 0,'selected':selected && item.data_id == selected.data_id}">
+                                            <div class="metting-msg">参加了 {{item.name}} 会议</div>
+                                            <div class="time">{{date_show(item.date)}}</div>
                                         </div>
                                     </div>
-                                    <div class="metting-detail-wapper">
+                                    <div v-if = "selected" class="metting-detail-wapper">
                                         <div class="top-panel">
                                             <div class="time-show-panel">
                                                 <div class="detail-title time">开始时间</div>
-                                                <div class="time-show">2018-12-12 18:30:30</div>
+                                                <div class="time-show">{{selectedExpertMeetingData ? date_show(selectedExpertMeetingData.sing_in_time,'yyyy-MM-dd hh:mm:ss') : 'null'}}</div>
                                                 <div class="detail-title time">结束时间</div>
-                                                <div class="time-show">2018-12-12 19:30:30</div>
+                                                <div class="time-show">{{selectedExpertMeetingData ? date_show(selectedExpertMeetingData.sing_down_time,'yyyy-MM-dd hh:mm:ss') :'null'}}</div>
                                             </div>
                                             <div class="voting-show-panel">
                                                 <table cellspacing=0 class="voting-table">
@@ -155,30 +156,25 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr>
-                                                            <td>111111111</td>
-                                                            <td>asdadas</td>
-                                                            <td>asdadas</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>asdadas</td>
-                                                            <td>asdadas</td>
-                                                            <td>asdadas</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>asdadas</td>
-                                                            <td>asdadas</td>
-                                                            <td>asdadas</td>
-                                                        </tr>
+                                                       
                                                     </tbody>
                                                 </table>
+                                                <div class = "voting-wapper">
+                                                        <div class="table-item" v-for = "it in selectedExpertMeetingData.voting">
+                                                                <div>{{it.name}}</div>
+                                                                <div>{{it.total}}</div>
+                                                                <div>{{getVotingShow(it.voting_data)}}</div>
+                                                        </div>
+                                                </div>
+
+                                                
 
                                             </div>
                                         </div>
                                         <div class="buttom-panel">
                                             <div class="detail-title" style="text-align:center;">批注</div>
                                             <div class="content">
-                                                行啊大苏打实打实大大十大
+                                                    <p v-for = "pd in selectedExpertMeetingData.annotate">{{pd}}</p>
                                             </div>
                                         </div>
                                     </div>

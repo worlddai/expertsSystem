@@ -11,8 +11,8 @@
         <div @click="$emit('on-edit',expertsData.data_id)" class="edit-title">编辑</div>
         <div class="edit-icon"></div>
     </div>
-    <div class="experts-show">
+    <div  ref="expert_show_tag_container" class="experts-show">
         <Tag v-for="item in expertsData.major" :key="item.data_id">{{item}}</Tag>
     </div>
-    <div class="ellipse" v-if="Math.random()<0.5">...</div>
+    <div class="ellipse" v-if="ellipse_show">...</div>
 </div>

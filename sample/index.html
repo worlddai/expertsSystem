@@ -1,0 +1,186 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>iview example</title>
+
+    <link rel="stylesheet" type="text/css" href="../lib/iview/iview.css">
+    <link rel="stylesheet" type="text/css" href="./css/sample.css">
+    <link rel="stylesheet" type="text/css" href="./css/group.css">
+
+    <script type="text/javascript" src="../lib/vue.js"></script>
+    <script type="text/javascript" src="../lib/iview/iview.min.js"></script>
+
+    <script type="text/javascript" src="../lib/jquery.min.js"></script>
+
+    <script type="text/javascript" src="./js/config.js"></script>
+
+    <script type="text/javascript" src="./components/group.js"></script>
+    <script type="text/javascript" src="./js/ajax.js"></script>
+
+
+</head>
+
+<body>
+    <div id="app" style="height:100%;">
+        <div class="main-header">专家抽取</div>
+        <div class="main-container" :class="{'full-height':true}">
+            <div class="mode-tab">
+                <div class="tab-item random" @click="mode = 'random'" :class="{active:mode=='random'}">
+                    <div class="icon"></div>
+                    <div class="font">随机抽取</div>
+                </div>
+                <div class="tab-item group" @click="mode = 'group'" :class="{active:mode=='group'}">
+                    <div class="icon"></div>
+                    <div class="font">分组抽取</div>
+                </div>
+            </div>
+            <div v-if="mode == 'random'" class="random-sample-parent">
+
+                <div class="msg-input">
+                    <p>抽取</p><input v-model="random_spample_num" type="number" />
+                    <p>人</p>
+                    <div style="clear:both"></div>
+                </div>
+                <div @click="doRandomSample" class="btn">随机抽取</div>
+
+                <div class="tip">
+                    <div class="msg">
+                        <p>抽取结果</p>
+
+                        <div style="clear: both"></div>
+                    </div>
+                    <div class="line">
+                        <div class="basic"></div>
+                        <div class="blue"></div>
+                    </div>
+                </div>
+                <div class="random-result">
+                    <div class="item" v-for="item in random_result">{{item.name}}</div>
+                </div>
+            </div>
+            <div v-if="mode == 'group'" class="result-tab">
+
+                <Tabs type="card" value="default-group">
+                    <tab-pane style="min-height: 400px;background-color: white" label="默认分组" name="default-group">
+                        <div class="tip">
+                            <div class="msg">
+                                <p>选择需要创建的分组</p>
+
+                                <div style="clear: both"></div>
+                            </div>
+                            <div class="line">
+                                <div class="basic"></div>
+                                <div class="blue"></div>
+                            </div>
+                        </div>
+
+                        <i-select @on-change="onDepartmentLevelChange" class="department-select-type" v-model="department_level_value"
+                            size="small" style="width:200px">
+                            <i-option v-for="item in department_level_name" :value="item.value" :key="item.value">{{
+                                item.label
+                                }}</i-option>
+                        </i-select>
+
+                        <div class="tag-container">
+                            <div class="checkable-select" @click="onDepartmentChange(item)" :class="{active:isActiveDepartment(item)}"
+                                v-for="item in department_level_group[department_level_value]">{{item}}
+                                <div class="rectangle" :class="{active:isActiveDepartment(item)}"></div>
+                                <Icon class="rectangle-img" type="md-checkmark"></Icon>
+                            </div>
+                            <div style="clear:both"></div>
+                            <!-- <Tag color="primary" :checked="false" v-for="item in department_level_group[department_level_value]" checkable :key="item">{{item}}</Tag> -->
+                        </div>
+                        <div v-if="department_level_actived.length>0" class="samle-sample-radio">
+                            <Checkbox class="" v-model="group_same_check">每组抽取相同人数</Checkbox>
+                            <div v-if="group_same_check"><input ref="group_same_check_input" v-model="same_sample_num"
+                                    type="number">人</div>
+                        </div>
+
+                        <div class="groups-container">
+                            <group ref="groups_component" :key="item" v-for="item in department_level_actived" :sample_checked="group_same_check"
+                                :name="item" :sample_number="same_sample_num"></group>
+                        </div>
+                        <div v-if="department_level_actived.length>0" @click="doSample" class="do-sample">确认抽取</div>
+
+                        <div v-if="group_result_show.length>0" class="tip">
+                            <div class="msg">
+                                <p>抽取结果</p>
+
+                                <div style="clear: both"></div>
+                            </div>
+                            <div class="line">
+                                <div class="basic"></div>
+                                <div class="blue"></div>
+                            </div>
+                        </div>
+
+                        <div class="result-container">
+                            <div v-for="item in group_result_show" class="sample-result">
+                                <div class="header">{{item.name}}</div>
+                                <div class="container">
+                                    <div class="item" v-for="it in item.result">
+                                        {{it.name}}
+                                    </div>
+                                    <div style="clear:both"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </tab-pane>
+                    <tab-pane class="diy-group-container" style="min-height: 400px;background-color: white" name="diy-group" label="自定义分组"
+                        name="diy-group">
+                        <div @click="addDIYGroup" class="add-diy-group-btn" :class="{'disable':!isActiveAddDIYGroup}">添加自定义分组</div>
+
+
+                        <div v-if="diy_group.length>0" class="samle-sample-radio">
+                            <Checkbox class="" v-model="diy_group_same_check">每组抽取相同人数</Checkbox>
+                            <div v-if="diy_group_same_check"><input :max ="diy_same_sample_num_max" ref="diy_group_same_check_input"  v-model="diy_same_sample_num"
+                                    type="number">人</div>
+                        </div>
+
+                        <div class="groups-container">
+                            <group @on-delete ="deleteDIYGroup(index)" @on-expert-select-change = "onExpertSelectChange" ref="groups_component_diy" :all_experts="all_experts_wait_add" v-for="(item,index) in diy_group" :sample_checked="diy_group_same_check"
+                                :name="item.name" :item="item" :edit="true" :sample_number="diy_same_sample_num"></group>
+                        </div>
+
+                        <div v-if="diy_group.length>0" @click="doDIYSample" class="do-sample">确认抽取</div>
+
+                        <div v-if="diy_group_result_show.length>0" class="tip">
+                                <div class="msg">
+                                    <p>抽取结果</p>
+    
+                                    <div style="clear: both"></div>
+                                </div>
+                                <div class="line">
+                                    <div class="basic"></div>
+                                    <div class="blue"></div>
+                                </div>
+                            </div>
+    
+                            <div class="result-container">
+                                <div v-for="item in diy_group_result_show" class="sample-result">
+                                    <div class="header">{{item.name}}</div>
+                                    <div class="container">
+                                        <div class="item" v-for="it in item.result">
+                                            {{it.name}}
+                                        </div>
+                                        <div style="clear:both"></div>
+                                    </div>
+                                </div>
+                            </div>
+                    </tab-pane>
+                </Tabs>
+            </div>
+            <div style="clear:both"></div>
+        </div>
+
+
+    </div>
+
+
+    <script type="text/javascript" src="./js/app.js"></script>
+
+</body>
+
+</html>

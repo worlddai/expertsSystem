@@ -1,47 +1,25 @@
 ﻿<div class="search-container">
-    <div class="search-condition">
-        <div class="msg">
-            <p>如下基本信息符合“</p>
-            <p>{{key}}</p>
-            <p>”</p>
-            <div style="clear: both"></div>
+
+
+    <div v-show="allnone" class="none-result-show-tip">暂时无搜索结果</div>
+
+    <div v-for="item in basic_search_condition">
+        <div v-if="!oneSearchEmpty(item.field_key)" class="search-condition">
+            <div class="msg">
+                <p>如下专家信息对于关键字“</p>
+                <p>{{key}}</p>
+                <p>”符合 {{item.name}} 查询结果</p>
+                <div style="clear: both"></div>
+            </div>
+            <div class="line">
+                <div class="basic"></div>
+                <div class="blue"></div>
+            </div>
         </div>
-        <div class="line">
-            <div class="basic"></div>
-            <div class="blue"></div>
-        </div>
-    </div>
-    <div class="result-container">
-        <experts @on-detail="goDetail" @on-delete="showDeleteExperts" @on-edit="showAddUpdateExperts" v-for="item in nameSearch" :experts-data="item"></experts>
-    </div>
-    <div class="search-condition">
-        <div class="msg">
-            <p>如下专家做过</p>
-            <p>{{key}}</p>
-            <p>”批注</p>
-            <div style="clear: both"></div>
-        </div>
-        <div class="line">
-            <div class="basic"></div>
-            <div class="blue"></div>
+        <div v-if="!oneSearchEmpty(item.field_key)" class="result-container">
+            <experts @on-detail="$emit('on-detail',it.data_id)" v-for="it in _self[item.field_key+'Search']" :key="it.data_id"
+                :experts-data="it"></experts>
         </div>
     </div>
-    <div class="result-container">
-        <experts v-for="item in annotateSearch" :experts-data="item"></experts>
-    </div>
-    <div class="search-condition">
-        <div class="msg">
-            <p>如下专家参与过</p>
-            <p>{{key}}</p>
-            <p>”会议</p>
-            <div style="clear: both"></div>
-        </div>
-        <div class="line">
-            <div class="basic"></div>
-            <div class="blue"></div>
-        </div>
-    </div>
-    <div class="result-container">
-        <experts v-for="item in mettingSearch" :experts-data="item"></experts>
-    </div>
+
 </div>

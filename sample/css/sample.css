@@ -1,0 +1,324 @@
+﻿html,body{
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+body{
+    background: #F1F1F1;
+}
+.tip{
+    margin-top: 10px;
+    margin-left: 15px;
+    width:calc(100% - 40px);
+}
+.tip .msg
+{
+   
+}
+.tip .msg p
+{
+    float: left;
+    font-size: 14px;
+    color:#666666;
+}
+.tip .msg p:nth-child(2)
+{
+    color:#0BACD3;
+    font-size: 16px;
+    font-weight: bold;
+}
+.tip .line
+{
+    position: relative;
+}
+.tip .line .basic
+{
+    height: 1px;
+    border: 1px solid #D6D8DE;
+}
+.tip .line .blue
+{
+    width: 68px;
+    position: absolute;
+    height: 4px;
+    background-color: #0BACD3;
+    top: -1px;
+}
+.main-header{
+    height: 80px;
+    font-size:30px;
+    font-family:SourceHanSansSC-Bold;
+    font-weight:bold;
+    color:rgba(255,255,255,1);
+    line-height:80px;
+    background:linear-gradient(0deg,rgba(30,84,140,1),rgba(11,172,211,1));
+    text-align: center;
+}
+.main-container
+{
+    padding-left: 18%;
+    padding-right: 18%;
+  
+    background: #F1F1F1;
+    overflow: auto;
+}
+.main-container.full-height{
+      height: calc(100% - 80px) ;
+}
+.mode-tab{
+    float: left;
+    width:183px;
+    height:232px;
+    font-size:18px;
+    font-family:SourceHanSansSC-Regular;
+    font-weight:400;
+    color:rgba(255,255,255,1);
+    box-shadow:0px 3px 7px 0px rgba(214, 222, 216, 0.35);
+    margin-top: 15px
+}   
+
+.random .icon
+{
+    height: 25px;
+    background: url('./images/random.png') no-repeat center center;
+    background-size:25px;
+}
+
+.mode-tab .tab-item{
+    height: 50%;
+    background:#677D82;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+.mode-tab .tab-item.active{
+    background-color: #0BACD3;
+}
+.group .icon
+{
+    height: 25px;
+    background: url('./images/group.png') no-repeat center center;
+    background-size:25px;
+}
+.result-tab{
+    float: left;
+    margin-top: 15px;
+    /* background: red; */
+    margin-left: 15px;
+    width: calc(100% - 183px - 15px);
+    /* height:calc(100% - 80px); */
+}
+
+.result-tab .ivu-tabs.ivu-tabs-card>.ivu-tabs-bar .ivu-tabs-tab{
+    border:none;
+}
+.result-tab .ivu-tabs-bar
+{
+    margin-bottom: 0px;
+    border-bottom:none
+}
+.result-tab .ivu-tabs-content
+{
+    height: 100%;
+}
+
+.department-select-type{
+    margin-left: 15px;
+    margin-top: 15px;
+}
+.tag-container{
+    margin-left: 15px;
+}
+.checkable-select{
+    width:132px;
+    height:34px;
+    border: 1px solid rgba(214, 216, 222, 1);
+    text-align: center;
+    line-height: 34px;
+    float: left;
+    margin-right: 10px;
+    margin-top: 5px;
+    position: relative;
+    overflow: hidden;
+}
+.checkable-select.active{
+    background:rgba(231,240,247,1);
+    border:1px solid rgba(11, 172, 211, 1)
+}
+.checkable-select .rectangle
+{
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    background: #D6D8DE;
+    transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    position: absolute;
+    right: -10px;
+    top: -10px;
+}
+.checkable-select .rectangle.active{
+    background: rgba(11, 172, 211, 1);
+}
+.checkable-select .rectangle-img
+{
+    cursor: pointer;
+    width: 8px;
+    height: 8px;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    color: white;
+    line-height: 8px;
+    font-size: 8px;
+}
+
+.groups-container{
+    margin-left: 15px;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.samle-sample-radio{
+    margin: auto;
+    text-align: center;
+    margin-top: 10px;
+}
+.samle-sample-radio input{
+    width:70px;
+    height:24px;
+    background:rgba(241,241,241,1);
+    border:1px solid rgba(214, 216, 222, 1);
+    text-align: center
+}
+.do-sample{
+    width:183px;
+    height:40px;
+    background:rgba(255,255,255,1);
+    border:1px solid rgba(11, 172, 211, 1);
+    box-shadow:0px 2px 6px 0px rgba(0,0,0,0.22);
+    font-size:16px;
+    color: rgba(11,172,211,1);
+    text-align: center;
+    line-height: 40px;
+    margin: auto;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.result-container{
+    margin-left: 15px;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+.result-container .sample-result
+{
+    width: 180px;
+     margin: 10px 10px 10px 10px;
+}
+.result-container .sample-result .header
+{
+    height:45px;
+    background:rgba(11,172,211,1);
+    font-size:16px;
+    line-height: 45px;
+    text-align: center;
+    color:rgba(255,255,255,1);
+}
+.result-container .sample-result .container
+{
+    background:rgba(231,240,247,1);
+    min-height: 150px
+}
+
+.result-container .sample-result .container .item{
+    font-size:16px;
+    font-family:SourceHanSansSC-Regular;
+    font-weight:400;
+    color:rgba(11,172,211,1);
+    float: left;
+    margin-left: 10px;
+    
+}
+.random-sample-parent {
+    float: left;
+    margin-top: 15px;
+    margin-left: 15px;
+    width: calc(100% - 183px - 15px);
+    height: calc(100% - 15px);
+    background-color: white;
+}
+.random-sample-parent .msg-input{
+    margin-top: 60px;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px
+
+}
+.random-sample-parent .msg-input p{
+    float: left;
+    font-size: 14px;
+    color:rgba(102,102,102,1);
+}
+.random-sample-parent .msg-input input{
+    float: left;
+    width:70px;
+    height:24px;
+    background:rgba(241,241,241,1);
+    border:1px solid rgba(214, 216, 222, 1);
+    text-align: center;
+    margin-right: 3px;
+    margin-left: 3px;
+}
+.random-sample-parent .btn
+{
+    width:183px;
+    height:40px;
+    background:rgba(11,172,211,1);
+    box-shadow:0px 2px 6px 0px rgba(0,0,0,0.22);
+    font-size:16px;
+    color:rgba(255,255,255,1);
+    text-align: center;
+    line-height: 40px;
+    margin: auto;
+    cursor: pointer;
+}
+.random-result{
+
+}
+.random-result .item
+{
+    float: left;
+    font-size:18px;
+    color:rgba(11,172,211,1);
+    margin-left: 30px;
+    margin-top: 20px;
+    
+}
+
+.diy-group-container .add-diy-group-btn
+{
+    width:183px;
+    height:40px;
+    background:rgba(11,172,211,1);
+    box-shadow:0px 2px 6px 0px rgba(0,0,0,0.22);
+    font-size:16px;
+    color:rgba(255,255,255,1);
+    text-align: center;
+    line-height: 40px;
+    margin: auto;
+    cursor: pointer;
+    margin-top: 30px
+}
+.diy-group-container .add-diy-group-btn.disable
+{
+    background-color: #999;
+}

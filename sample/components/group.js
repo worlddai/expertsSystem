@@ -49,6 +49,10 @@
                     return ret;
                 },
                 addExperts() {
+
+                    if (!this.isEdit)
+                        return;
+
                     const spliced = this.experts_data.splice(0, this.experts_data.length);
                     if (spliced.length) {
                         this.all_experts.push(...spliced);
@@ -103,7 +107,7 @@
                     AJAX.queryExpertsByCompany(this.name).then((data) => {
 
                         self.total_num = data.hits.total;
-                        self.experts_data = data.hits.hits.map((d) => {
+                        self.experts_data = data.hits.hits.map((d) => {0
                             d._source.data_id = d._id;
                             return d._source;
                         });
@@ -113,14 +117,13 @@
 
             },
             destroyed() {
-
+                if (!this.isEdit)
+                    return;
                 if (!this.experts_data.length)
                     return;
-
                 const spliced = this.experts_data.splice(0, this.experts_data.length);
                 if (spliced.length) {
-                    if (this.all_experts)
-                        this.all_experts.push(...spliced);
+                    this.all_experts.push(...spliced);
                 }
                 // this.$emit('on-expert-select-change');
             },

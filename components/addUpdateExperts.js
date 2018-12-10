@@ -1,41 +1,42 @@
-﻿Vue.component('addUpdateExperts', function (resolve, reject) {
+﻿
+Vue.component('addUpdateExperts', function (resolve, reject) {
     $.get("./components/addUpdateExperts.html").then(function (res) {
         resolve({
             template: res,
             data: () => {
                 return {
-                    addUpdateExpertsShow: false,
-                    title: "添加专家",
-                    persistent: {
+                    addUpdateExpertsShow: false,//--是否显示
+                    title: "添加专家",//--页面标题
+                    persistent: {//--固定加载的数据
                         major_group_json: [],
                         company_group_json: [],//--单位级联数据
                     },
-                    config: {},
-                    modeIsUpdate: false,
-                    tags_add: {
-                        tag_list_visible: false,
-                        tag_tree_data: [],
-                        temp_tag_tree_removed: [],
-                        search: {
+                    modeIsUpdate: false,//--是否是更新模式
+
+                    tags_add: { //--标签添加相关属性
+                        tag_list_visible: false,//--标签窗口是否打开
+                        tag_tree_data: [],//--所有的标签数据树
+                        temp_tag_tree_removed: [],//--暂存移除的标签
+                        search: {//--标签搜索
                             value: "",
                             result_tags: []
                         }
                     },
-                    formItem: {
-                        name: "",
+                    formItem: {//--表单相关字段
+                        name: "",//--姓名
                         duty: "",//--职务
-                        company: {
+                        company: {//--单位
                             prepend: [
                             ],
                             detail: ""
                         },
-                        contact: [{
+                        contact: [{//--联系方式
                             "type": "office",
                             "value": ""
                         }],
-                        major: []
+                        major: []//--专业领域
                     },
-                    ruleValidate: {
+                    ruleValidate: {//--表单验证规则
                         name: [
                             { required: true, message: '专家姓名不能为空', trigger: 'blur' }
                         ],
@@ -82,7 +83,7 @@
                             }
                         ],
                     },
-                    file: null
+                    file: null//--记录头像的base64
                 }
             },
             computed: {
@@ -123,9 +124,6 @@
                 }
             },
             methods: {
-                remove() {
-
-                },
                 handleUpload(file) {
                     this.file = file;
                     this.checkFile(file);
@@ -167,6 +165,7 @@
                         return AJAX.updatePhoto(id, json);
                     }
                 },
+                //--渲染树数据
                 makeTreeData() {
                     const copyedData = $.extend(true, [], this.persistent.major_group_json);
                     const self = this;
@@ -221,12 +220,13 @@
                     }, this)
                     return copyedData;
                 },
+                //--展开节点
                 expandNode(targetarr) {
                     const target = targetarr[0]
                     target.expand = !target.expand;
                     target.selected = false;
-
                 },
+                //--清除表单
                 clearForm() {
                     this.formItem.name = "";
                     this.formItem.duty = "";
@@ -235,20 +235,21 @@
                     this.formItem.contact[0].value = ""
                     this.$refs.photo_img.src = "";
                     this.$refs.add_update_form.resetFields();
-
                 },
+                //--重置添加标签页面
                 resoreTagsAddState() {
                     this.tags_add.tag_list_visible = false;
                     this.tags_add.tag_tree_data = this.makeTreeData();
                     this.formItem.major = [];
                     this.tags_add.temp_tag_tree_removed.splice(0, this.tags_add.temp_tag_tree_removed.length - 1);
                 },
+                //--重置状态
                 resoreState() {
                     this.resoreTagsAddState();
                     this.file = null;
                     this.filesrc = null;
                 },
-
+                //--处理更新
                 handelAddUpdate() {
                     const self = this;
                     this.$refs.add_update_form.validate((valid) => {
@@ -285,6 +286,7 @@
                     return false;
 
                 },
+                //--主入口
                 show: function (experts_id) {
                     this.resoreState();
                     this.modeIsUpdate = !!experts_id;
@@ -308,9 +310,6 @@
 
                     this.addUpdateExpertsShow = true;
                 },
-                searchHandel() {
-
-                },
                 handleAddContact() {
                     this.formItem.contact.push({ 'type': 'mobile', 'value': '' })
                 },
@@ -328,12 +327,9 @@
                         else
                             name = target.title;
                     }
-
-
                     var loop = function (tararr, parent) {
                         for (var i = 0, nlen = tararr.length; i < nlen; i++) {
                             const tg = tararr[i];
-
                             if (tg.title == name) {
                                 return { node: tararr.splice(i, 1)[0], parent: parent };
                             }
@@ -346,7 +342,6 @@
                                         continue;
                                 }
                             }
-
                         }
                     }
                     const removeed = loop(this.tags_add.tag_tree_data, '_root_');
@@ -371,8 +366,6 @@
                             break;
                         }
                     }
-
-                    // const removedNode = this.temp_tag_tree_removed.filter((d) => { return d.node.title == spliced.title })[0];
                     if (!removedNode)
                         return;
                     const loop = (arr, parent) => {
@@ -393,11 +386,6 @@
                 },
                 loadConfig() {
                     const self = this;
-
-                    loadCommonConfig((data) => {
-                        self.config = data;
-                    })
-
                     //--专业领域级联数据
                     loadMajorCascadeConfig((data) => {
                         self.persistent.major_group_json = data;

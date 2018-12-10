@@ -70,7 +70,7 @@
     margin-top:100px    
 }
 .metting-show-wapper.slider-down{
-    height: calc(100% - 250px);   
+    height: calc(100% - 300px);   
 }
 
 .metting-show-unit{
@@ -121,20 +121,20 @@
 
 .detail-title{
     background-color: #D6D8DE;
-    height: 30px;
-    line-height: 30px;
+    height: 40px;
+    line-height: 40px;
     color: #666666;
     font-size: 14px;
 }
 .metting-detail-wapper{
 
-    height:calc(250px - 10px);
+    height:calc(300px - 10px);
     margin-top: 10px;
     
 }
 .metting-detail-wapper .top-panel
 {
-    height: 120px;
+    height: 160px;
     
 }
 
@@ -148,8 +148,8 @@
 }
 .metting-detail-wapper .top-panel .time-show-panel .time-show
 {
-    height: 30px;
-    line-height: 30px;
+    height: 40px;
+    line-height: 40px;
     font-size: 14px;
     background-color: white;
     text-indent: 16px;
@@ -178,12 +178,12 @@ table.voting-table thead tr{
 }
 
 table.voting-table th{
-    height: 30px;
+    height: 40px;
     font-weight: 400;
     font-size: 14px;
 }
 table.voting-table tr{
-    height: 30px;
+    height: 40px;
     background-color: white;
 }
 table.voting-table tr td{
@@ -195,13 +195,13 @@ table.voting-table tr td{
 
 .metting-detail-wapper .top-panel .voting-show-panel .voting-wapper
 {
-    height: 90px;
+    height: 120px;
     overflow: auto;
     background-color: white;
 }
 .metting-detail-wapper .top-panel .voting-show-panel .voting-wapper div.table-item{
-    height: 30px;
-    line-height: 30px;
+    height: 40px;
+    line-height: 40px;
 }
 .metting-detail-wapper .top-panel .voting-show-panel .voting-wapper div.table-item>div{
     float: left;
@@ -217,7 +217,7 @@ table.voting-table tr td{
 .metting-detail-wapper .buttom-panel
 {
     margin-top: 10px;
-    height: calc(250px - 120px - 10px);
+    height: calc(300px - 160px - 10px);
     background-color: white;
     
 }
@@ -225,7 +225,7 @@ table.voting-table tr td{
 .metting-detail-wapper .buttom-panel .content
 {
     padding-left: 16px;
-    max-height: calc(100% - 30px);
+    max-height: calc(100% - 40px);
     overflow: auto;
 }
 .metting-detail-wapper .buttom-panel .content p{

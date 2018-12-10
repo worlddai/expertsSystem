@@ -11,15 +11,10 @@
 
     <script type="text/javascript" src="../lib/vue.js"></script>
     <script type="text/javascript" src="../lib/iview/iview.min.js"></script>
-
     <script type="text/javascript" src="../lib/jquery.min.js"></script>
-
-    <script type="text/javascript" src="./js/config.js"></script>
-
+    <script type="text/javascript" src="../js/config.js"></script>
     <script type="text/javascript" src="./components/group.js"></script>
-    <script type="text/javascript" src="./js/ajax.js"></script>
-
-
+    <script type="text/javascript" src="../js/ajax.js"></script>
 </head>
 
 <body>
@@ -37,7 +32,6 @@
                 </div>
             </div>
             <div v-if="mode == 'random'" class="random-sample-parent">
-
                 <div class="msg-input">
                     <p>抽取</p><input v-model="random_spample_num" type="number" />
                     <p>人</p>
@@ -76,8 +70,7 @@
                             </div>
                         </div>
 
-                        <i-select @on-change="onDepartmentLevelChange" class="department-select-type" v-model="department_level_value"
-                            size="small" style="width:200px">
+                        <i-select class="department-select-type" v-model="department_level_value" size="small" style="width:200px">
                             <i-option v-for="item in department_level_name" :value="item.value" :key="item.value">{{
                                 item.label
                                 }}</i-option>
@@ -99,8 +92,8 @@
                         </div>
 
                         <div class="groups-container">
-                            <group ref="groups_component" :key="item" v-for="item in department_level_actived" :sample_checked="group_same_check"
-                                :name="item" :sample_number="same_sample_num"></group>
+                            <group ref="groups_component" :key="item" v-for="item in department_level_actived"
+                                :sample_checked="group_same_check" :name="item" :sample_number="same_sample_num"></group>
                         </div>
                         <div v-if="department_level_actived.length>0" @click="doSample" class="do-sample">确认抽取</div>
 
@@ -128,59 +121,56 @@
                             </div>
                         </div>
                     </tab-pane>
-                    <tab-pane class="diy-group-container" style="min-height: 400px;background-color: white" name="diy-group" label="自定义分组"
-                        name="diy-group">
+                    <tab-pane class="diy-group-container" style="min-height: 400px;background-color: white" name="diy-group"
+                        label="自定义分组" name="diy-group">
                         <div @click="addDIYGroup" class="add-diy-group-btn" :class="{'disable':!isActiveAddDIYGroup}">添加自定义分组</div>
 
 
                         <div v-if="diy_group.length>0" class="samle-sample-radio">
                             <Checkbox class="" v-model="diy_group_same_check">每组抽取相同人数</Checkbox>
-                            <div v-if="diy_group_same_check"><input :max ="diy_same_sample_num_max" ref="diy_group_same_check_input"  v-model="diy_same_sample_num"
-                                    type="number">人</div>
+                            <div v-if="diy_group_same_check"><input :max="diy_same_sample_num_max" ref="diy_group_same_check_input"
+                                    v-model="diy_same_sample_num" type="number">人</div>
                         </div>
 
                         <div class="groups-container">
-                            <group @on-delete ="deleteDIYGroup(index)" @on-expert-select-change = "onExpertSelectChange" ref="groups_component_diy" :all_experts="all_experts_wait_add" v-for="(item,index) in diy_group" :sample_checked="diy_group_same_check"
-                                :name="item.name" :item="item" :edit="true" :sample_number="diy_same_sample_num"></group>
+                            <group @on-delete="deleteDIYGroup(index)" @on-expert-select-change="onExpertSelectChange"
+                                ref="groups_component_diy" :all_experts="all_experts_wait_add" v-for="(item,index) in diy_group"
+                                :sample_checked="diy_group_same_check" :name="item.name" :item="item" :edit="true"
+                                :sample_number="diy_same_sample_num"></group>
                         </div>
 
                         <div v-if="diy_group.length>0" @click="doDIYSample" class="do-sample">确认抽取</div>
 
                         <div v-if="diy_group_result_show.length>0" class="tip">
-                                <div class="msg">
-                                    <p>抽取结果</p>
-    
-                                    <div style="clear: both"></div>
-                                </div>
-                                <div class="line">
-                                    <div class="basic"></div>
-                                    <div class="blue"></div>
-                                </div>
+                            <div class="msg">
+                                <p>抽取结果</p>
+
+                                <div style="clear: both"></div>
                             </div>
-    
-                            <div class="result-container">
-                                <div v-for="item in diy_group_result_show" class="sample-result">
-                                    <div class="header">{{item.name}}</div>
-                                    <div class="container">
-                                        <div class="item" v-for="it in item.result">
-                                            {{it.name}}
-                                        </div>
-                                        <div style="clear:both"></div>
+                            <div class="line">
+                                <div class="basic"></div>
+                                <div class="blue"></div>
+                            </div>
+                        </div>
+
+                        <div class="result-container">
+                            <div v-for="item in diy_group_result_show" class="sample-result">
+                                <div class="header">{{item.name}}</div>
+                                <div class="container">
+                                    <div class="item" v-for="it in item.result">
+                                        {{it.name}}
                                     </div>
+                                    <div style="clear:both"></div>
                                 </div>
                             </div>
+                        </div>
                     </tab-pane>
                 </Tabs>
             </div>
             <div style="clear:both"></div>
         </div>
-
-
     </div>
-
-
     <script type="text/javascript" src="./js/app.js"></script>
-
 </body>
 
 </html>

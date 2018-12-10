@@ -41,18 +41,6 @@ function loadCompanyCascadeConfig(success) {
         }
     })
 }
-//--加载基本配置
-function loadCommonConfig(success) {
-    $.ajax({
-        type: 'get',
-        url: './config/common_config.json',
-        success: data => {
-            success(data);
-        },
-        error: () => {
-        }
-    })
-}
 
 function loopLeaf(treeData, fn, scope) {
     treeData.map((tg) => {

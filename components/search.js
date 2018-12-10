@@ -80,6 +80,29 @@
                             self.basic_search_condition.push(self.basic_search_condition.pop())
                         })
                     })
+
+                    // AJAX.queryMeeting({
+                    //     "query": {
+                    //         "multi_match": {
+                    //             "query": this.key,
+                    //             "fields": ["name"],
+                    //             "operator": "and",
+                    //             "fuzziness": "AUTO"
+                    //         }
+                    //     }
+                    // }).then(data => {
+                    //     const experts_id = [];
+                    //     data.hits.hits.map((d) => {
+                    //         // d._source.data_id = d._id;
+                    //         d._source.experts.map((exp) => {
+                    //             if (experts_id.every(tg => {
+                    //                 return tg != exp.id
+                    //             }))
+                    //                 experts_id.push(exp.id);
+                    //         });
+                    //     });
+                    // })
+
                 }
             },
             mounted: function () {

@@ -215,10 +215,8 @@ const global_vue = new Vue({
             })
         },
         onDepartmentLevelChange() {
-            debugger;
         },
         onDepartmentChange(item) {
-            debugger;
             var nIndex = 0
             if (this.department_level_actived.some((d, index) => {
                 nIndex = index;

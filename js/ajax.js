@@ -1,4 +1,12 @@
-﻿var AJAX = {};
+﻿/*
+ * @Description: In User Settings Edit
+ * @Author: your name
+ * @Date: 2018-12-06 14:09:23
+ * @LastEditTime: 2018-12-10 18:49:38
+ * @LastEditors: Please set LastEditors
+ */
+
+var AJAX = {};
 
 AJAX.queryExperts = function (data) {
 
@@ -14,6 +22,7 @@ AJAX.queryExperts = function (data) {
         })
     })
 }
+
 AJAX.getExperts = function (_id) {
 
     return new Promise((resove, reject) => {
@@ -60,6 +69,28 @@ AJAX.updateExperts = function (_id, postData) {
             "url": `${gConfig.host}/expert/info/${_id}?refresh=wait_for`,
             "data": JSON.stringify(postData),
             "success": (data) => {
+                resove(data);
+            }
+        })
+    })
+}
+AJAX.queryExpertsByCompany = function (key) {
+    var data = {
+        "query": {
+            "multi_match": {
+                "query": key,
+                "fields": ["company.prepend"],
+                "operator": "and"
+            }
+        }
+    }
+    return new Promise((resove, reject) => {
+        $.ajax({
+            type: "post",
+            contentType: 'application/json',
+            url: `${gConfig.host}/expert/info/_search?`,
+            data: JSON.stringify(data),
+            success(data) {
                 resove(data);
             }
         })
@@ -168,7 +199,7 @@ AJAX.pushMetting = function () {
         "name": `第一次代表大会${Math.random().toFixed(2) * 100}`,
         "date": new Date().getTime(),
         "experts": [{
-            "id": "dJqRk2cBbbNc8MaPNkWL",
+            "id": "h5rUlWcBbbNc8MaPwkWi",
             "voting": [
                 {
                     "name": "废后表决",
@@ -179,10 +210,10 @@ AJAX.pushMetting = function () {
             ,
             "sing_in_time": new Date().getTime(),
             "sing_down_time": new Date().getTime(),
-            "annotate": ["daddddddddddddddddddddddd", "dadddddddddddddddddd"]
+            "annotate": ["这是一些有道理的批注信息", "就像你说的一样，很有道理"]
         },
         {
-            "id": "cpqQk2cBbbNc8MaPT0WR",
+            "id": "i5rVlWcBbbNc8MaP_UX6",
             "voting": [
                 {
                     "name": "废后表决",
@@ -214,7 +245,7 @@ AJAX.pushMetting = function () {
             ,
             "sing_in_time": new Date().getTime() + 100000,
             "sing_down_time": new Date().getTime() + 100000,
-            "annotate": ["daddddddddddddddddddddddd", "dadddddddddddddddddd"]
+            "annotate": ["这是一些有道理的批注信息", "就像你说的一样，很有道理"]
         }]
     }
 
@@ -225,6 +256,19 @@ AJAX.pushMetting = function () {
             "url": `${gConfig.host}/meeting/info?refresh=wait_for`,
             "data": JSON.stringify(postData),
             "success": (data) => {
+                resove(data);
+            }
+        })
+    })
+}
+AJAX.queryMeeting = function (data) {
+    return new Promise((resove, reject) => {
+        $.ajax({
+            type: "post",
+            contentType: 'application/json',
+            url: `${gConfig.host}/meeting/info/_search`,
+            data: JSON.stringify(data),
+            success(data) {
                 resove(data);
             }
         })

@@ -4,7 +4,8 @@ Vue.component('home', {
     data: () => {
         return {
             search_value: "",
-            experts_type_value: 'New York',
+            experts_type_value: [],
+            company_group_json: [],
             experts_type: [
                 {
                     value: 'New York',
@@ -21,6 +22,13 @@ Vue.component('home', {
             },
             total_num: 0,
             curIndex: 1
+        }
+    },
+    watch:{
+        experts_type_value()
+        {
+            this.reqExpertsData(0, 10);
+            // this.curIndex = 1;
         }
     },
     computed: {
@@ -74,11 +82,24 @@ Vue.component('home', {
             const self = this;
             return new Promise((resove, reject) => {
 
-                AJAX.queryExperts({
+                const query = {
                     "from": start,
                     "size": 10,
                     "sort": { "date": { "order": "asc" } }
-                }).then((data) => {
+                }
+                if (self.experts_type_value.length) {
+                    //--取最后一个关键字查找
+                    const key = self.experts_type_value[self.experts_type_value.length - 1];
+                    query.query = {
+                        "multi_match": {
+                            "query": key,
+                            "fields": ["company.prepend"],
+                            "operator": "and"
+                        }
+                    }
+                }
+
+                AJAX.queryExperts(query).then((data) => {
                     self.total_num = data.hits.total;
                     self.data_list = data.hits.hits.map((d) => {
                         d._source.data_id = d._id;
@@ -95,10 +116,17 @@ Vue.component('home', {
         },
         searchHandel(e) {
             this.$refs.search_component.doSearch(this.search_value);
+        },
+        loadCashaData() {
+            const self = this;
+            loadCompanyCascadeConfig((data) => {
+                self.company_group_json = data;
+            })
         }
 
     },
     mounted() {
         this.reqExpertsData(0, 10);
+        this.loadCashaData();
     }
 });

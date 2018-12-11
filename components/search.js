@@ -24,7 +24,7 @@
                         {
                             name: "联系方式",
                             field_key: "contact",
-                            search_key: ['contact.value'],
+                            search_key: ['contact'],
                         },
                         {
                             name: "专业领域",
@@ -42,7 +42,7 @@
                         if (!tg)
                             return true;
                         return tg.length == 0;
-                    }, this)
+                    }, this) && !this.mettingSearch.length
                 }
             },
             methods: {
@@ -61,6 +61,7 @@
                 doSearch(key) {
                     this.key = key;
                     const self = this;
+                    //--查询基本信息
                     this.basic_search_condition.map(d => {
                         AJAX.queryExperts({
                             "query": {
@@ -80,29 +81,41 @@
                             self.basic_search_condition.push(self.basic_search_condition.pop())
                         })
                     })
-
-                    // AJAX.queryMeeting({
-                    //     "query": {
-                    //         "multi_match": {
-                    //             "query": this.key,
-                    //             "fields": ["name"],
-                    //             "operator": "and",
-                    //             "fuzziness": "AUTO"
-                    //         }
-                    //     }
-                    // }).then(data => {
-                    //     const experts_id = [];
-                    //     data.hits.hits.map((d) => {
-                    //         // d._source.data_id = d._id;
-                    //         d._source.experts.map((exp) => {
-                    //             if (experts_id.every(tg => {
-                    //                 return tg != exp.id
-                    //             }))
-                    //                 experts_id.push(exp.id);
-                    //         });
-                    //     });
-                    // })
-
+                    //--查询参会信息
+                    AJAX.queryMeeting({
+                        "query": {
+                            "multi_match": {
+                                "query": this.key,
+                                "fields": ["name"],
+                                "operator": "and",
+                                "fuzziness": "AUTO"
+                            }
+                        }
+                    }).then(data => {
+                        const experts_id = [];
+                        data.hits.hits.map((d) => {
+                            // d._source.data_id = d._id;
+                            d._source.experts.map((exp) => {
+                                if (experts_id.every(tg => {
+                                    return tg != exp.id
+                                }))
+                                    experts_id.push(exp.id);
+                            });
+                        });
+                        const ppromiseArr = [];
+                        experts_id.map((id) => {
+                            ppromiseArr.push(AJAX.getExperts(id))
+                        })
+                        Promise.all(ppromiseArr).then(dataarr => {
+                            self.mettingSearch = dataarr.filter(d => {
+                                return !!d.hits.hits.length;
+                            }).map(data => {
+                                const ret = data.hits.hits[0]._source;
+                                ret.data_id = data.hits.hits[0]._id
+                                return ret;
+                            });
+                        })
+                    })
                 }
             },
             mounted: function () {

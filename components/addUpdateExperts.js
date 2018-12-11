@@ -124,6 +124,10 @@ Vue.component('addUpdateExperts', function (resolve, reject) {
                 }
             },
             methods: {
+                searchHandel()
+                {
+
+                },
                 handleUpload(file) {
                     this.file = file;
                     this.checkFile(file);

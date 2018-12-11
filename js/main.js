@@ -33,8 +33,8 @@ function loadCompanyCascadeConfig(success) {
         url: './config/danwei_tree.json',
         success: data => {
             success(
-                loopCascadeData(data),
-            );
+                loopCascadeData(data)
+            )
         },
         error: () => {
             // failure();

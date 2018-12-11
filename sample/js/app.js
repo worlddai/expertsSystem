@@ -167,7 +167,7 @@ const global_vue = new Vue({
             AJAX.queryExperts(
                 {
                     "from": 0,
-                    "size": 1000,
+                    "size": gConfig.max_data_size,
                 }
             ).then(data => {
                 const dataarr = data.hits.hits.map((d) => {
@@ -293,7 +293,7 @@ const global_vue = new Vue({
         AJAX.queryExperts(
             {
                 "from": 0,
-                "size": 1000,
+                "size": gConfig.max_data_size,
             }
         ).then((date) => {
             self.all_experts_wait_add = date.hits.hits.map((d) => {

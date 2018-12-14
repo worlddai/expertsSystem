@@ -51,9 +51,6 @@ Vue.component('addUpdateExperts', function (resolve, reject) {
                                     if (!value.prepend.length) {
                                         errors.push('请选择单位分类');
                                     }
-                                    if (!value.detail) {
-                                        errors.push('请输入单位详细信息')
-                                    }
                                     callback(errors);
                                 }
                             }
@@ -124,8 +121,7 @@ Vue.component('addUpdateExperts', function (resolve, reject) {
                 }
             },
             methods: {
-                searchHandel()
-                {
+                searchHandel() {
 
                 },
                 handleUpload(file) {
@@ -178,26 +174,30 @@ Vue.component('addUpdateExperts', function (resolve, reject) {
                             tg.render = (h, { root, node, data }) => {
                                 return h('span', {
                                     style: {
-                                        display: 'inline-block',
+                                        // display: 'inline-block',
                                         width: '100%'
                                     }
                                 }, [
-                                        h('span', [
-                                            h('Icon', {
-                                                props: {
-                                                    type: 'ios-link'
-                                                },
-                                                style: {
-                                                    marginRight: '8px'
-                                                }
-                                            }),
-                                            h('span', data.title)
-                                        ]),
                                         h('span', {
                                             style: {
-                                                display: 'inline-block',
+                                                float: 'left',
+                                            }
+                                        }, [
+                                                h('Icon', {
+                                                    props: {
+                                                        type: 'ios-link'
+                                                    },
+                                                    style: {
+                                                        marginRight: '8px'
+                                                    }
+                                                }),
+                                                h('span', data.title)
+                                            ]),
+                                        h('span', {
+                                            style: {
+                                                // display: 'inline-block',
                                                 float: 'right',
-                                                marginRight: '32px'
+                                                marginRight: '20px'
                                             }
                                         }, [
                                                 h('Button', {
@@ -215,7 +215,12 @@ Vue.component('addUpdateExperts', function (resolve, reject) {
                                                         click: () => { this.addOneTag(data) }
                                                     }
                                                 })
-                                            ])
+                                            ]),
+                                        h('div', {
+                                            style: {
+                                                clear: "both"
+                                            }
+                                        })
                                     ]);
                             }
                         } else {
@@ -237,7 +242,7 @@ Vue.component('addUpdateExperts', function (resolve, reject) {
                     this.formItem.company.prepend = [];
                     this.formItem.company.detail = "";
                     this.formItem.contact[0].value = ""
-                    this.$refs.photo_img.src = "";
+                    this.$refs.photo_img.src = "./css/images/default_photo.png";
                     this.$refs.add_update_form.resetFields();
                 },
                 //--重置添加标签页面
@@ -259,9 +264,10 @@ Vue.component('addUpdateExperts', function (resolve, reject) {
                     this.$refs.add_update_form.validate((valid) => {
                         if (valid) {
                             if (!self.filesrc) {
-                                self.$Message.error("请选择照片");
-                                self.$refs.add_update_modal.buttonLoading = false;
-                                return;
+                                // self.$Message.error("请选择照片");
+                                // self.$refs.add_update_modal.buttonLoading = false;
+                                // return;
+                                self.filesrc = './css/images/default_photo.png'
                             }
                             if (!this.modeIsUpdate) {
                                 AJAX.addExperts(self.formItem).then((data) => {

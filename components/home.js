@@ -24,9 +24,8 @@ Vue.component('home', {
             curIndex: 1
         }
     },
-    watch:{
-        experts_type_value()
-        {
+    watch: {
+        experts_type_value() {
             this.reqExpertsData(0, 10);
             // this.curIndex = 1;
         }
@@ -71,7 +70,9 @@ Vue.component('home', {
             this.reqExpertsData((this.curIndex - 1) * 10, this.curIndex * 10).then(() => {
                 if (deep) {
                     const components = self.$refs.experts_components;
-                    const tg = components.length ? components : [components];
+                    if (!components)
+                        return;
+                    const tg = $.isArray(components) ? components : [components];
                     tg.map((t) => {
                         t.loadImg();
                     })

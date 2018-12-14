@@ -53,7 +53,7 @@
 .experts-unit .experts-photo-wapper img.experts-photo{
     width: 130px;
     height: calc(130px * 3 / 2);
-    background-color: blue;
+    /* background-color: blue; */
     margin: 6px 0px 0px 6px;
 }
  .experts-unit .experts-photo-wapper div.name{

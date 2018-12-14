@@ -131,7 +131,7 @@ body{
     margin-left: 15px;
 }
 .checkable-select{
-    width:132px;
+    width:128px;
     height:34px;
     border: 1px solid rgba(214, 216, 222, 1);
     text-align: center;
@@ -141,6 +141,8 @@ body{
     margin-top: 5px;
     position: relative;
     overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 .checkable-select.active{
     background:rgba(231,240,247,1);

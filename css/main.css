@@ -5,7 +5,7 @@
 
 .add-update-form-item{
     max-width: 380px;
-    margin-bottom: 15px !important;
+    margin-bottom: 16px !important;
 }
 .add-update-form-item.long{
     max-width: 600px;
@@ -37,6 +37,10 @@
     overflow-y: auto;
     overflow-x: hidden;
 }
+.tags-tree-wapper .ivu-tree-arrow
+{
+    float: left;
+}
 .add-contact-btn.ivu-btn{
     padding: 1px 10px 2px;
 }
@@ -46,7 +50,7 @@
    
 }
 .photo-upload-wapper{
-    width: 140px;
+    width: 121px;
     height: 200px;
     position: absolute;
     right: 30px;
@@ -54,8 +58,8 @@
     text-align: center
 }
 .photo-wapper{
-    width: 140px;
-    height: 160px;
+    width: 121px;
+    height: calc(121px *3 /2);
    
 }
 
@@ -96,6 +100,15 @@
 {
     margin: 0px 0px !important;
 }
+.ivu-input-group-append .ivu-icon-ios-remove::before{
+    font-size: 12.5px
+}
+.ivu-input-group-append .ivu-icon-ios-add::before{
+    font-size: 12.5px
+}
+.ivu-btn-small{
+    font-size: 12.5px !important;
+}
 .main-button{
     /* height: 35px; */
 }
@@ -105,8 +118,8 @@
     margin-top: 10px
 }
 #logoPic{
-    width: 140px;
-    height: 160px;
+    width: 121px;
+    height: calc(121px *3 /2);
     border: none;
 }
 img[src=""],img:not([src]){
@@ -191,6 +204,7 @@ html,body{
 {
     float: left;
     margin-left: 300px;
+    width: 230px;
 }
 .tool-bar .add-experts-btn
 {

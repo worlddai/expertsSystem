@@ -1,0 +1,48 @@
+<html>
+<head>
+<title>parsexml</title>
+<script type="text/javascript" src="inc/JSAN.js" charset="UTF-8"></script>
+<script type="text/javascript" src="inc/Test/Builder.js" charset="UTF-8"></script>
+<script type="text/javascript" src="../lib/XML/ObjTree.js"></script>
+</head>
+<body>
+<pre><script><!--
+
+    var test = new Test.Builder();
+    test.plan({tests: 10});
+
+    var xotree = new XML.ObjTree();
+    test.ok( xotree, "loaded." );
+    var xml;
+    var tree;
+
+    xml = '<?xml version="1.0"?><root>foo bar</root>';
+    tree = xotree.parseXML( xml );
+    test.ok( tree.root == "foo bar", "with xml decl." );
+
+    xml = '<root>foo bar</root>';
+    tree = xotree.parseXML( xml );
+    test.ok( tree.root == "foo bar", "without xml decl." );
+
+    xml = '<root><node>foo bar</node></root>';
+    tree = xotree.parseXML( xml );
+    test.ok( tree.root.node == "foo bar", "child node" );
+
+    xml = '<root><node attr="foo">bar</node></root>';
+    tree = xotree.parseXML( xml );
+    test.ok( tree.root.node["-attr"] == "foo", "attribute" );
+    test.ok( tree.root.node["#text"] == "bar", "text node" );
+
+    xml = '<root>foo<node>bar</node></root>';
+    tree = xotree.parseXML( xml );
+    test.ok( tree.root["#text"] == "foo", "text node" );    // failed
+    test.ok( tree.root.node == "bar", "child node" );
+
+    xml = '<root><node>foo</node><node>bar</node></root>';
+    tree = xotree.parseXML( xml );
+    test.ok( tree.root.node[0] == "foo", "child node #1/2" );
+    test.ok( tree.root.node[1] == "bar", "child node #2/2" );
+
+//--></script></pre>
+</body>
+</html>

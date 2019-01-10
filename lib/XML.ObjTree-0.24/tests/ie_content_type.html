@@ -1,0 +1,35 @@
+<html>
+<head>
+<title>ie_content_type</title>
+<script type="text/javascript" src="inc/JSAN.js" charset="UTF-8"></script>
+<script type="text/javascript" src="inc/Test/Builder.js" charset="UTF-8"></script>
+<script type="text/javascript" src="inc/HTTP/Request.js" charset="UTF-8"></script>
+<script type="text/javascript" src="../lib/XML/ObjTree.js"></script>
+</head>
+<body>
+<pre id="test"><script><!--
+
+    var test = new Test.Builder();
+    test.plan({tests: 5});
+
+    var xotree = new XML.ObjTree();
+    test.ok( xotree, "loaded." );
+
+    var xml = xotree.parseHTTP( 'examples/kawanet-rdf.xml' );
+    test.ok( xml['rdf:RDF'].channel.link == 'http://www.kawa.net/xp/index-e.html', '.xml' );
+
+    var rdf = xotree.parseHTTP( 'examples/ext-rdf.rdf' );
+    test.ok( rdf['rdf:RDF'].channel.link == 'http://www.kawa.net/', '.rdf' );
+
+    var rss = xotree.parseHTTP( 'examples/ext-rss.rss' );
+    test.ok( rss.rss.channel.link == 'http://www.kawa.net/', '.rss' );
+
+    var atom = xotree.parseHTTP( 'examples/ext-atom.atom' );
+    test.ok( atom.feed.link['-href'] == 'http://www.kawa.net/', '.atom' );
+
+    var orig = xotree.parseHTTP( 'examples/ext-orig.orig' );
+    test.ok( orig.orig.link == 'http://www.kawa.net/', '.orig' );
+
+//--></script></pre>
+</body>
+</html>

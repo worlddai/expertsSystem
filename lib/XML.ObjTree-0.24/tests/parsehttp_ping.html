@@ -1,0 +1,31 @@
+<html>
+<head>
+<title>parsehttp-ping</title>
+<script type="text/javascript" src="inc/JSAN.js" charset="UTF-8"></script>
+<script type="text/javascript" src="inc/Test/Builder.js" charset="UTF-8"></script>
+<script type="text/javascript" src="inc/HTTP/Request.js" charset="UTF-8"></script>
+<script type="text/javascript" src="../lib/XML/ObjTree.js"></script>
+</head>
+<body>
+<pre id="test"><script><!--
+
+    var test = new Test.Builder();
+    test.plan({tests: 7});
+
+    var xotree = new XML.ObjTree();
+    test.ok( xotree, "loaded." );
+
+    var url1 = "examples/ping-response.xml";
+    var tree = xotree.parseHTTP( url1 );
+    test.ok( tree, "response (sync mode)" );
+    test.ok( tree.methodResponse, "methodResponse" );
+    var str = tree.methodResponse.params.param.value.struct;
+    test.ok( str.member[0].name == "message", "member[0].name" );
+    test.ok( str.member[0].value.string == "Thanks for the Ping", "member[0].value.string" );
+    test.ok( str.member[1].name == "flerror", "member[0].name" );
+//  `boolean' is reserved word on Safari
+    test.ok( str.member[1].value["boolean"] == "0", "member[1].value.boolean" );
+
+//--></script></pre>
+</body>
+</html>

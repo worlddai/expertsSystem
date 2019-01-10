@@ -1,0 +1,44 @@
+<html>
+<head>
+<title>parsehttp-rdf</title>
+<script type="text/javascript" src="inc/JSAN.js" charset="UTF-8"></script>
+<script type="text/javascript" src="inc/Test/Builder.js" charset="UTF-8"></script>
+<script type="text/javascript" src="inc/HTTP/Request.js" charset="UTF-8"></script>
+<script type="text/javascript" src="../lib/XML/ObjTree.js"></script>
+</head>
+<body>
+<pre id="test"><script><!--
+
+    var test = new Test.Builder();
+    test.plan({tests: 12});
+
+    var xotree = new XML.ObjTree();
+    test.ok( xotree, "loaded." );
+    var async;
+
+    var url1 = "examples/kawanet-rdf.xml";
+    var tree = xotree.parseHTTP( url1 );
+
+    test.ok( tree, "response (sync mode)" );
+    test.ok( tree["rdf:RDF"], "methodResponse" );
+    test.ok( tree["rdf:RDF"].channel.link == "http://www.kawa.net/xp/index-e.html", "channel link" );
+
+    var about1 = tree["rdf:RDF"].channel["-rdf:about"];
+    if ( ! about1 ) about1 = tree["rdf:RDF"].channel["-about"];     // Safari
+    test.ok( about1 == "http://www.kawa.net/xp/index-e.html", "channel rdf:about" );
+    test.ok( tree["rdf:RDF"].channel.items["rdf:Seq"]["rdf:li"].length == 3, "channel items rdf:li (length)" );
+    test.ok( tree["rdf:RDF"].item.length == 3, "item (length)" );
+
+    var about2 = tree["rdf:RDF"].item[0]["-rdf:about"];
+    if ( ! about2 ) about2 = tree["rdf:RDF"].item[0]["-about"];     // Safari
+    test.ok( about2 == "http://www.kawa.net/works/perl/romanize/romanize-e.html", "item[0] rdf:about" );
+    test.ok( tree["rdf:RDF"].item[1].title == "[flickr] Cherry Blossoms at Chiba Park", "item[1] title" );
+    test.ok( tree["rdf:RDF"].item[1]["media:category"]["#text"] == "sakura hanami", "item[1] media:category #text" );
+    var scheme = tree["rdf:RDF"].item[1]["media:category"]["-scheme"];
+    if ( ! scheme ) scheme = tree["rdf:RDF"].item[1]["media:category"]["-media:scheme"];    // Opera
+    test.ok( scheme == "urn:flickr:tags", "item[1] media:category scheme" );
+    test.ok( tree["rdf:RDF"].item[2].link == "http://www.kawa.net/works/js/jkl/parsexml-e.html", "item[2] link" );
+
+//--></script></pre>
+</body>
+</html>

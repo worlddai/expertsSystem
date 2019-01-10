@@ -15,7 +15,9 @@
     <script type="text/javascript" src="lib/iview/iview.min.js"></script>
     <script type="text/javascript" src="lib/vue-router.min.js"></script>
 
+
     <script type="text/javascript" src="lib/jquery.min.js"></script>
+    <script type="text/javascript" src="lib/ObjTree.js"></script>
     <script type="text/javascript" src="util/image_uploader.js"></script>
     <script type="text/javascript" src="js/main.js"></script>
     <script type="text/javascript" src="js/ajax.js"></script>
@@ -128,9 +130,9 @@
                                         <div class="top-panel">
                                             <div class="time-show-panel">
                                                 <div class="detail-title time">开始时间</div>
-                                                <div class="time-show">{{selectedExpertMeetingData ? date_show(selectedExpertMeetingData.sing_in_time,'yyyy-MM-dd hh:mm:ss') : 'null'}}</div>
+                                                <div class="time-show">{{selectedExpertMeetingData ? selectedExpertMeetingData.sing_in_time : 'null'}}</div>
                                                 <div class="detail-title time">结束时间</div>
-                                                <div class="time-show">{{selectedExpertMeetingData ? date_show(selectedExpertMeetingData.sing_down_time,'yyyy-MM-dd hh:mm:ss') :'null'}}</div>
+                                                <div class="time-show">{{selectedExpertMeetingData ? selectedExpertMeetingData.sing_down_time :'null'}}</div>
                                             </div>
                                             <div class="voting-show-panel">
                                                 <table cellspacing=0 class="voting-table">

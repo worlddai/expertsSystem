@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rdf:RDF xmlns="http://purl.org/rss/1.0/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:media="http://search.yahoo.com/mrss" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+<channel rdf:about="http://www.kawa.net/xp/index-e.html">
+<dc:date>2006-04-04T15:51:00+09:00</dc:date>
+<dc:language>en</dc:language>
+<dc:rights>Copyright 1995-2006 Yusuke Kawasaki. All rights reserved.</dc:rights>
+<image />
+<link>http://www.kawa.net/xp/index-e.html</link>
+<title>Kawa.net xp - ajax/JavaScript/Perl/CGI/etc., Yusuke Kawasaki</title>
+<description>Yusuke Kawasaki's homepage from Japan. Ajax/JavaScript/Perl/CGI/... technical articles and photos.</description>
+<items>
+<rdf:Seq>
+<rdf:li rdf:resource="http://www.kawa.net/works/perl/romanize/romanize-e.html" />
+<rdf:li rdf:resource="http://www.flickr.com/photos/u-suke/120725430/" />
+<rdf:li rdf:resource="http://www.kawa.net/works/js/jkl/parsexml-e.html" />
+</rdf:Seq>
+</items>
+</channel>
+<image rdf:resource="http://static.flickr.com/40/buddyicons/50902562@N00.jpg?1136221538">
+<link>http://www.flickr.com/photos/u-suke/</link>
+<title>Yusuke,SF's Photos</title>
+<url>http://static.flickr.com/40/buddyicons/50902562@N00.jpg?1136221538</url>
+</image>
+<item rdf:about="http://www.kawa.net/works/perl/romanize/romanize-e.html">
+<dc:date>2006-04-04T15:51:00+09:00</dc:date>
+<link>http://www.kawa.net/works/perl/romanize/romanize-e.html</link>
+<title>[Perl] Lingua::*::Romanize::* - Romanization of CJK characters</title>
+<description>Lingua::*::Romanize::* modules generate roman letteres from CJK characters.
+Lingua::JA::Romanize::Japanese module parses
+Japanese
+characters, both of Kanji and Kana.
+Lingua::ZH::Romanize::Pinyin module parses
+Chinese
+characters, both of Mandarin and Cantonese.
+Lingua::KO::Romanize::Hangul module parses
+Korean
+characters, Hangul.</description>
+</item>
+<item rdf:about="http://www.flickr.com/photos/u-suke/120725430/">
+<creator>nobody@flickr.com (Yusuke,SF)</creator>
+<dc:date>2006-03-31T05:45:39-08:00</dc:date>
+<link>http://www.flickr.com/photos/u-suke/120725430/</link>
+<media:category scheme="urn:flickr:tags">sakura hanami</media:category>
+<media:content type="image/jpeg" url="http://static.flickr.com/52/120725430_439cb3316c_o.jpg" height="480" width="640" />
+<media:credit role="photographer">Yusuke,SF</media:credit>
+<media:text type="html">
+&lt;p&gt;&lt;a href=&quot;http://www.flickr.com/people/u-suke/&quot;&gt;Yusuke,SF&lt;/a&gt; posted a photo:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://www.flickr.com/photos/u-suke/120725430/&quot; title=&quot;Cherry Blossoms at Chiba Park&quot;&gt;&lt;img src=&quot;http://static.flickr.com/52/120725430_439cb3316c_m.jpg&quot; width=&quot;240&quot; height=&quot;180&quot; alt=&quot;Cherry Blossoms at Chiba Park&quot; style=&quot;border: 1px solid #ddd;&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Here are many beautiful Sakura trees.&lt;/p&gt;</media:text>
+<media:thumbnail url="http://static.flickr.com/52/120725430_439cb3316c_s.jpg" height="75" width="75" />
+<media:title>Cherry Blossoms at Chiba Park</media:title>
+<title>[flickr] Cherry Blossoms at Chiba Park</title>
+<description>&lt;p&gt;&lt;a href=&quot;http://www.flickr.com/people/u-suke/&quot;&gt;Yusuke,SF&lt;/a&gt; posted a photo:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://www.flickr.com/photos/u-suke/120725430/&quot; title=&quot;Cherry Blossoms at Chiba Park&quot;&gt;&lt;img src=&quot;http://static.flickr.com/52/120725430_439cb3316c_m.jpg&quot; width=&quot;240&quot; height=&quot;180&quot; alt=&quot;Cherry Blossoms at Chiba Park&quot; style=&quot;border: 1px solid #ddd;&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Here are many beautiful Sakura trees.&lt;/p&gt;</description>
+</item>
+<item rdf:about="http://www.kawa.net/works/js/jkl/parsexml-e.html">
+<dc:date>2006-03-22T02:47:00+09:00</dc:date>
+<link>http://www.kawa.net/works/js/jkl/parsexml-e.html</link>
+<title>[ajax] JKL.ParseXML - parse remote XML file into JavaScript object (JSON)</title>
+<description>JKL.ParseXML is a JavaScript class to convert a remote XML file into JavaScript object (JSON)</description>
+</item>
+</rdf:RDF>

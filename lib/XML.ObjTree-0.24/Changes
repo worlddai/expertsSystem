@@ -1,0 +1,27 @@
+# XML.ObjTree Changes
+
+0.24    2006/08/14
+    * spread local XML files support by parseHTTP(). (thanks to Iair Salem)
+    * bug fix: writeXML() with an object which includes boolean type.
+      (thanks to syunduel and James Revillini)
+
+0.23    2006/05/14
+    * support Safari for Intel Mac, DOMParser's async property is read-only.
+      See http://www.kawa.net/works/ajax/tips/crash-safari/intelmac-e.html
+
+0.22    2006/04/30
+    * new parameter: attr_prefix
+
+0.21    2006/04/05 (XML.ObjTree)
+    * packaged for JSAN
+    * methods: parseXML parseDOM parseHTTP writeXML
+
+0.19    2006/02/03
+    * latest release of jkl-parsexml.js
+
+0.01    2005/05/18
+    * first release of jkl-parsexml.js
+      http://www.kawa.net/works/js/jkl/parsexml-e.html
+
+# http://www.kawa.net/works/js/xml/objtree-e.html       (English)
+# http://www.kawa.net/works/js/xml/objtree.html#history (Japanese)

@@ -1,0 +1,1 @@
+<?xml version="1.0" encoding="UTF-8"?><methodResponse><params><param><value><struct><member><name>message</name><value><string>Thanks for the Ping</string></value></member><member><name>flerror</name><value><boolean>0</boolean></value></member></struct></value></param></params></methodResponse>

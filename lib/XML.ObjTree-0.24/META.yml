@@ -1,0 +1,7 @@
+---
+name: XML.ObjTree
+version: 0.24
+author:
+  - Yusuke Kawasaki <u-suke [at] kawa.net>
+abstract: XML source code from/to JavaScript object like E4X
+license: artistic

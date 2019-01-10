@@ -1,0 +1,56 @@
+<html>
+<head>
+<title>writexml</title>
+<script type="text/javascript" src="inc/JSAN.js" charset="UTF-8"></script>
+<script type="text/javascript" src="inc/Test/Builder.js" charset="UTF-8"></script>
+<script type="text/javascript" src="../lib/XML/ObjTree.js"></script>
+</head>
+<body>
+<pre><script><!--
+
+    var test = new Test.Builder();
+    test.plan({tests: 9});
+
+    var xotree = new XML.ObjTree();
+    test.ok( xotree, "loaded." );
+    var xml;
+    var tree;
+
+    tree = {
+        root: {
+            node: "Hello, World!"
+        }
+    };
+    xml = xotree.writeXML( tree );
+    test.ok( xml.match(/<root>/), "root element" );
+    test.ok( xml.match(/<root>\s*<node>/), "child node" );
+    test.ok( xml.match(/<node>\s*Hello, World!\s*<\/node>/), "hello world" );
+    test.ok( xml.match(/<\/node>\s*<\/root>\s*$/), "closing" );
+
+    tree = {
+        root: {
+            node: {
+                "-attr":    "foo",
+                "#text":    "bar"
+            }
+        }
+    };
+    xml = xotree.writeXML( tree );
+    test.ok( xml.match(/<node \s*attr=[\"\']foo[\"\']>/), "attribute" );
+    test.ok( xml.match(/bar\s*<\/node>/), "text node" );
+
+    tree = {
+        root: {
+            node: [
+                { child1:   "foo" },
+                { child2:   "bar" }
+            ]
+        }
+    };
+    xml = xotree.writeXML( tree );
+    test.ok( xml.match(/<root>\s*<node>\s<child1>\s*foo/), "first child" );
+    test.ok( xml.match(/<\/node>\s*<node>\s<child2>\s*bar/), "second child" );
+
+//--></script></pre>
+</body>
+</html>

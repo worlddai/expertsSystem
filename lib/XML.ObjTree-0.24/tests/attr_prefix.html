@@ -1,0 +1,43 @@
+<html>
+<head>
+<title>attr_prefix</title>
+<script type="text/javascript" src="inc/JSAN.js" charset="UTF-8"></script>
+<script type="text/javascript" src="inc/Test/Builder.js" charset="UTF-8"></script>
+<script type="text/javascript" src="../lib/XML/ObjTree.js"></script>
+</head>
+<body>
+<pre><script><!--
+
+    var test = new Test.Builder();
+    test.plan({tests: 12});
+
+    var xot0 = new XML.ObjTree();
+    test.ok( xot0, "loaded." );
+
+    var source = '<root><foo bar="hoge" /></root>';
+
+    var tree1 = xot0.parseXML( source );
+    test.ok( tree1.root.foo['-bar'] == 'hoge', "parse: default" );
+
+    var out1 = source;
+    out1 = out1.replace( /[\s\r\n]+/g, "" );
+//  out1 = out1.replace( /</g, "&lt;" );
+
+    var prefs = [ '-', '@', '_', '?', '.' ];
+
+    for( var i=0; i<prefs.length; ++i ) {
+        var prefix = prefs[i];
+        var xot1 = new XML.ObjTree();
+        xot1.attr_prefix = prefix;
+        var tree = xot1.parseXML( source );
+        test.ok( tree.root.foo[prefix+'bar'] == 'hoge', "parse: "+prefix );
+        var out2 = xot1.writeXML( tree );
+        out2 = out2.replace( /[\s\r\n]+/g, "" );
+        out2 = out2.replace( /<\?.*?\?>/, "" );
+//      out2 = out2.replace( /</g, "&lt;" );
+        test.ok( out2 == out1, "write: "+prefix );
+    }
+
+//--></script></pre>
+</body>
+</html>

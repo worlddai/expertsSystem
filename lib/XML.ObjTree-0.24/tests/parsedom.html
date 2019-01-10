@@ -1,0 +1,46 @@
+<html>
+<head>
+<title>parsedom</title>
+<script type="text/javascript" src="inc/JSAN.js" charset="UTF-8"></script>
+<script type="text/javascript" src="inc/Test/Builder.js" charset="UTF-8"></script>
+<script type="text/javascript" src="../lib/XML/ObjTree.js"></script>
+</head>
+<body>
+<div style="display: none;">
+<DIV id="dom1">foo bar</DIV>
+<DIV id="dom2"><SPAN title="foo">bar</SPAN></DIV>
+<DIV id="dom3"><SPAN title="foo">bar</SPAN><SPAN title="hoge">hoga</SPAN></DIV>
+</div>
+<pre><script><!--
+
+    var test = new Test.Builder();
+    test.plan({tests: 8});
+
+    var xotree = new XML.ObjTree();
+    test.ok( xotree, "loaded." );
+    var xml;
+    var tree;
+    var dom;
+
+    dom = document.getElementById("dom1");
+    tree = xotree.parseDOM( dom );
+    test.ok( tree.DIV["#text"] == "foo bar", "text node" );
+
+    dom = document.getElementById("dom2");
+    tree = xotree.parseDOM( dom );
+    test.ok( (tree.DIV.SPAN["-title"] == "foo"||
+              tree.DIV.SPAN["-TITLE"] == "foo"), "child node attribute" );
+    test.ok( (tree.DIV.SPAN["#text"]  == "bar"), "child node text node" );
+
+    dom = document.getElementById("dom3");
+    tree = xotree.parseDOM( dom );
+    test.ok( (tree.DIV.SPAN[0]["-title"] == "foo"||
+              tree.DIV.SPAN[0]["-TITLE"] == "foo"),  "childen #1/2 attribute" );
+    test.ok( (tree.DIV.SPAN[0]["#text"] == "bar"),  "childen #1/2 text node" );
+    test.ok( (tree.DIV.SPAN[1]["-title"] == "hoge"||
+              tree.DIV.SPAN[1]["-TITLE"] == "hoge"), "childen #2/2 attribute" );
+    test.ok( (tree.DIV.SPAN[1]["#text"]  == "hoga"), "childen #2/2 text node" );
+
+//--></script></pre>
+</body>
+</html>

@@ -129,5 +129,6 @@ Vue.component('home', {
     mounted() {
         this.reqExpertsData(0, 10);
         this.loadCashaData();
+        AJAX.queryOriginMetting();
     }
 });

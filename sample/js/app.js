@@ -18,7 +18,10 @@ const global_vue = new Vue({
             diy_same_sample_num_max: 5,
             diy_group_result: [],
 
-            all_experts_wait_add: []
+            all_experts_wait_add: [],
+            save_show: false,
+            str_save_name: "",
+            curMode:0,//-- 0  随机  1 分租  2 自定义分组
         }
     },
     watch: {
@@ -159,7 +162,7 @@ const global_vue = new Vue({
 
             this.diy_same_sample_num = nMin;
             this.diy_same_sample_num_max = nMin;
-
+           
 
         },
         doRandomSample() {
@@ -284,6 +287,40 @@ const global_vue = new Vue({
 
             this.diy_group.splice(index, 1);
             this.diy_group_result.splice(index, 1)
+        },
+        saveSample(mode) {
+            this.curMode = mode;
+            this.str_save_name = "";
+            this.save_show = true;
+        },
+        doSave() {
+            
+            if (!this.str_save_name.length) {
+                this.$Message.error("名称不能为空!");
+                this.$refs.save_modal.buttonLoading = false;
+                return;
+            }
+            const self = this;
+
+            var  group_result_single = [];
+            this.group_result.map((d)=>{
+                d.map((dd)=>{
+                    group_result_single.push(dd);
+                })
+            })
+
+            var  diy_group_result_single = [];
+            this.diy_group_result.map((d)=>{
+                d.map((dd)=>{
+                    diy_group_result_single.push(dd);
+                })
+            })
+
+            AJAX.saveSampleResult(this.str_save_name,this.curMode,this.curMode == 0 ?  this.random_result : this.curMode == 1 ? group_result_single : diy_group_result_single).then((id)=>{
+                this.$Message.info("保存成功");
+                self.save_show = false;
+                self.$refs.save_modal.buttonLoading = false;
+            })
         }
     },
     mounted() {

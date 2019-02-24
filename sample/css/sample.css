@@ -280,7 +280,7 @@ body{
     margin-right: 3px;
     margin-left: 3px;
 }
-.random-sample-parent .btn
+ .btn
 {
     width:183px;
     height:40px;
@@ -292,6 +292,10 @@ body{
     line-height: 40px;
     margin: auto;
     cursor: pointer;
+}
+ .btn.yellow
+{
+    background-color: #f90;
 }
 .random-result{
 

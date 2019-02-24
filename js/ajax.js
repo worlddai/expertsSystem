@@ -479,4 +479,129 @@ AJAX.queryOriginMetting = function (data) {
         })
     })
 }
+AJAX.isIndexExist = function (indexName, docname) {
+    return new Promise((resove, reject) => {
+        $.ajax(
+            {
+                type: "get",
+                contentType: 'application/json',
+                url: `${gConfig.host}/${indexName}/${docname}/_search?`,
+                success(data) {
+                    reject(data);
+                },
+                error(e) {
+                    if (e.responseJSON.error.type == "index_not_found_exception")
+                        resove();
+                    else
+                        reject()
+                }
+            }
+        )
+    })
+}
+AJAX.createIndex = function (indexName, typename, mapping) {
+    return new Promise((resove, reject) => {
+        AJAX.isIndexExist(indexName, typename).then(() => {
+            $.ajax({
+                type: "post",
+                contentType: 'application/json',
+                data: "{}",
+                url: `${gConfig.host}/${indexName}/${typename}/1?`,
+                success(data) {
+                    $.ajax({
+                        type: "delete",
+                        contentType: 'application/json',
+                        data: "{}",
+                        url: `${gConfig.host}/${indexName}/${typename}/1`,
+                        success(data) {
+                            if (mapping) {
+                                $.ajax({
+                                    type: "post",
+                                    contentType: 'application/json',
+                                    data: JSON.stringify(mapping),
+                                    url: `${gConfig.host}/${indexName}/${typename}/_mapping?`,
+                                    success() {
+                                        resove();
+                                    },
+                                    error(data) {
+                                        reject("创建mapping失败")
+                                    }
+                                })
+                            }
+                            else {
+                                resove();
+                            }
+                        },
+                        error(data) {
+                            reject("创建索引失败")
+                        }
+                    })
 
+                },
+                error(e) {
+                    reject("创建索引失败")
+                }
+            })
+        }).catch(() => {
+            reject("索引已经存在");
+        })
+
+    })
+}
+AJAX.saveSampleResult = function (name, type, data_arr) {
+
+    var postData = {
+        "name": name,
+        "time": new Date().getTime(),
+        "type": type,
+        "experts": data_arr
+    }
+
+    var getRandomId = function () {
+        var str = "";
+        for (var i = 0; i < 5; i++) {
+            str += Math.round(Math.random() * 10);
+        }
+        return str;
+    }
+
+    return new Promise((resove, reject) => {
+
+        const post = () => {
+            var id = getRandomId();
+            $.ajax({
+                type: "post",
+                contentType: 'application/json',
+                url: `${gConfig.host}/sample/info/${id}?refresh=wait_for`,
+                data: JSON.stringify(postData),
+                success() {
+                    debugger;
+                    resove(id);
+                },
+                error() {
+                    debugger;
+                }
+            })
+        }
+        AJAX.createIndex("sample", "info", {
+            "properties": {
+                "time": {
+                    "type": "date"
+                }
+            }
+        }
+        ).then(() => {
+            post();
+        }).catch(() => {
+            post();
+        })
+    })
+}
+
+// $.ajax({
+//     type: "put",
+//     dataType: "xml",
+//     contentType: 'application/json',
+//     url: `${gConfig.host}/expert/_settings`,
+//     data: JSON.stringify({"index.blocks.read_only_allow_delete": null })
+// })

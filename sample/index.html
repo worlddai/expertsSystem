@@ -52,7 +52,10 @@
                 </div>
                 <div class="random-result">
                     <div class="item" v-for="item in random_result">{{item.name}}</div>
+                    <div style="clear: both;"></div>
                 </div>
+                <div @click="saveSample(0)" v-if = "!!random_result.length" class="btn yellow">保存抽取结果</div>
+               
             </div>
             <div v-if="mode == 'group'" class="result-tab">
 
@@ -120,6 +123,7 @@
                                 </div>
                             </div>
                         </div>
+                        <div @click="saveSample(1)" v-if = "!!group_result_show.length" class="btn yellow">保存抽取结果</div>
                     </tab-pane>
                     <tab-pane class="diy-group-container" style="min-height: 400px;background-color: white" name="diy-group"
                         label="自定义分组" name="diy-group">
@@ -164,11 +168,15 @@
                                 </div>
                             </div>
                         </div>
+                        <div @click="saveSample(2)" v-if = "!!diy_group_result_show.length" class="btn yellow">保存抽取结果</div>
                     </tab-pane>
                 </Tabs>
             </div>
             <div style="clear:both"></div>
         </div>
+        <Modal @on-ok = "doSave" ref = "save_modal" :loading="true" v-model="save_show" draggable title="保存抽取结果">
+            <span style="font-size: 18px">请输入抽取名称</span><i-input v-model = "str_save_name"></i-input>
+        </Modal>
     </div>
     <script type="text/javascript" src="./js/app.js"></script>
 </body>
